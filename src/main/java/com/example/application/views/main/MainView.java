@@ -19,32 +19,27 @@ import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.tabs.TabsVariant;
 import com.vaadin.flow.router.PageTitle;
-import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.server.PWA;
 import com.vaadin.flow.server.VaadinSession;
 import com.vaadin.flow.theme.Theme;
 import com.example.application.views.main.MainView;
 import com.example.application.views.login.LoginView;
-import com.example.application.views.about.AboutView;
-import com.example.application.views.cardlist.CardListView;
-import com.example.application.views.masterdetail.MasterDetailView;
+
 
 /**
  * The main view is a top-level placeholder for other views.
  */
-
 @JsModule("./styles/shared-styles.js")
 @CssImport("./styles/views/main/main-view.css")
-@PWA(name = "login", shortName = "login", enableInstallPrompt = false)
 public class MainView extends AppLayout {
 
     private final Tabs menu;
     private H1 viewTitle;
-    private AuthService authRoute;
+    private AuthService authService;
 
-    public MainView(AuthService authRoute) {
-        this.authRoute = authRoute;
+    public MainView(AuthService authService) {
+        this.authService = authService;
         setPrimarySection(Section.DRAWER);
         addToNavbar(true, createHeaderContent());
         menu = createMenu();
@@ -75,8 +70,8 @@ public class MainView extends AppLayout {
         HorizontalLayout logoLayout = new HorizontalLayout();
         logoLayout.setId("logo");
         logoLayout.setAlignItems(FlexComponent.Alignment.CENTER);
-        logoLayout.add(new Image("images/logo.png", "login logo"));
-        logoLayout.add(new H1("login"));
+        logoLayout.add(new Image("images/logo.png", "auth-example logo"));
+        logoLayout.add(new H1("auth-example"));
         layout.add(logoLayout, menu);
         return layout;
     }
@@ -92,16 +87,9 @@ public class MainView extends AppLayout {
 
     private Component[] createMenuItems() {
         var user = VaadinSession.getCurrent().getAttribute(User.class);
-        return authRoute.getAuthoRoute(user.getRole()).stream()
+        return authService.getAuthoRoutes(user.getRole()).stream()
                 .map(r -> createTab(r.name(), r.view()))
-                .toArray(Component[]::new); // damit man die richte View zurückgibt (toArray : ist einfach um returen value richtig anzupassen!)
-
-
-                /*
-                createTab("login", LoginView.class),
-                createTab("About", AboutView.class),
-                createTab("Card List", CardListView.class),
-                createTab("Master-Detail", MasterDetailView.class)};*/
+                .toArray(Component[]::new);
     }
 
     private static Tab createTab(String text, Class<? extends Component> navigationTarget) {
@@ -119,7 +107,9 @@ public class MainView extends AppLayout {
     }
 
     private Optional<Tab> getTabForComponent(Component component) {
-        return menu.getChildren().filter(tab -> ComponentUtil.getData(tab, Class.class).equals(component.getClass()))
+        return menu.getChildren()
+                .filter(tab -> ComponentUtil.getData(tab, Class.class)
+                        .equals(component.getClass()))
                 .findFirst().map(Tab.class::cast);
     }
 

@@ -8,6 +8,8 @@ import org.apache.commons.lang3.RandomStringUtils;
 
 import javax.persistence.Entity;
 
+import java.util.ArrayList;
+
 import static org.apache.commons.codec.digest.DigestUtils.sha1Hex;
 
 @Entity
@@ -21,11 +23,14 @@ public class User extends AbstractEntity {
 
     private Role role;
 
+    private ArrayList<Rezept> rezepts;
+
     public User() {
+
     }
 
 
-    public User(String username, String passwort, Role role) {
+    public User(String username, String passwort, Role role ) {
         this.username = username;
         this.role = role;
         this.passwortSalt = RandomStringUtils.random(32);

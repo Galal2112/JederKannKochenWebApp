@@ -1,13 +1,11 @@
 package com.example.application.data.generator;
 
+import com.example.application.data.Repos.UserRepo;
 import com.example.application.data.entity.Role;
 import com.example.application.data.entity.User;
-import com.example.application.data.service.UserRepo;
 import com.vaadin.flow.spring.annotation.SpringComponent;
-
 import com.example.application.data.service.PersonRepository;
 import com.example.application.data.entity.Person;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -43,8 +41,8 @@ public class DataGenerator {
             personRepository.saveAll(personRepositoryGenerator.create(100, seed));
 
 
-            userRepo.save(new User("Amro", "12345", Role.USER));
-            userRepo.save(new User("Amro2", "12345", Role.ADMIN));
+            userRepo.save(new User("u", "1" , Role.USER));
+            userRepo.save(new User("a", "1", Role.ADMIN));
             userRepo.save(new User("Amro3", "12345", Role.USER));
 
             logger.info("Generated demo data");
