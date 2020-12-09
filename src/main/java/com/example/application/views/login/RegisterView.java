@@ -55,12 +55,21 @@ public class RegisterView extends Composite {
 
             Notification.show("Passworte stimmen nicht ueberein !!");
 
+        } else if (authService.getUserRepo().getByUsername(username) != null) {
+
+
+            Notification.show("Username ist schon besitzt !!");
+
         } else {
 
 
             authService.registrieren(username, pass1);
 
             Notification.show("Erfolgreich regstiriert !");
+
         }
     }
+
 }
+
+

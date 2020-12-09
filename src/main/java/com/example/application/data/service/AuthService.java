@@ -3,6 +3,7 @@ package com.example.application.data.service;
 import com.example.application.data.Repos.UserRepo;
 import com.example.application.data.entity.Role;
 import com.example.application.data.entity.User;
+import com.example.application.views.RezeptView.RezeptView;
 import com.example.application.views.about.AboutView;
 import com.example.application.views.cardlist.CardListView;
 import com.example.application.views.login.LoginView;
@@ -74,10 +75,13 @@ public class AuthService {
             routes.add(new AuthRoute("home", "Home", CardListView.class));
             routes.add(new AuthRoute("admin", "Admin", MasterDetailView.class));
             routes.add(new AuthRoute("logout", "Logout", LogoutView.class));
+            routes.add(new AuthRoute("rezept", "Rezept", RezeptView.class));
         }
 
         return routes;
     }
 
-
+    public UserRepo getUserRepo() {
+        return userRepo;
+    }
 }

@@ -20,8 +20,8 @@ import javax.security.auth.message.AuthException;
 
 @Route(value = "login")
 @PageTitle("Login")
-@RouteAlias(value = "")
 @CssImport("./styles/views/login.css")
+
 
 
 public class LoginView extends Div {

@@ -1,11 +1,10 @@
 package com.example.application.data.generator;
 
+import com.example.application.data.Repos.RezeptsRepo;
 import com.example.application.data.Repos.UserRepo;
-import com.example.application.data.entity.Role;
-import com.example.application.data.entity.User;
+import com.example.application.data.entity.*;
 import com.vaadin.flow.spring.annotation.SpringComponent;
 import com.example.application.data.service.PersonRepository;
-import com.example.application.data.entity.Person;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -13,11 +12,13 @@ import org.springframework.context.annotation.Bean;
 import org.vaadin.artur.exampledata.DataType;
 import org.vaadin.artur.exampledata.ExampleDataGenerator;
 
+import java.util.ArrayList;
+
 @SpringComponent
 public class DataGenerator {
 
     @Bean
-    public CommandLineRunner loadData(PersonRepository personRepository, UserRepo userRepo) {
+    public CommandLineRunner loadData(PersonRepository personRepository, UserRepo userRepo, RezeptsRepo rezeptsRepo) {
         return args -> {
             Logger logger = LoggerFactory.getLogger(getClass());
             if (personRepository.count() != 0L) {
@@ -41,9 +42,32 @@ public class DataGenerator {
             personRepository.saveAll(personRepositoryGenerator.create(100, seed));
 
 
-            userRepo.save(new User("u", "1" , Role.USER));
+            userRepo.save(new User("u", "1", Role.USER));
             userRepo.save(new User("a", "1", Role.ADMIN));
             userRepo.save(new User("Amro3", "12345", Role.USER));
+
+
+
+
+            ArrayList users = new ArrayList();
+            String[] inhalt = {"Zwiebel", "Knolauch"};
+
+            Zutat[] zutat = new Zutat[3];
+            zutat[0]=new Zutat("Tomaten");
+            zutat[1]=new Zutat("Reis");
+            zutat[2]=new Zutat("Pasta");
+
+
+
+
+           // Zutat[] zutat = {};
+
+            rezeptsRepo.save(new Rezept("https://www.youtube.com/watch", users, "koshary", zutat, inhalt));
+
+            rezeptsRepo.save(new Rezept("video", users, "pasta", zutat, inhalt));
+
+            rezeptsRepo.save(new Rezept("video", users, "mombar", zutat, inhalt));
+
 
             logger.info("Generated demo data");
         };

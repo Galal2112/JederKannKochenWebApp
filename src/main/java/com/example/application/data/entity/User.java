@@ -42,7 +42,7 @@ public class User extends AbstractEntity {
     public boolean checkueberEinStimmung(String pass) {
 
 
-        return DigestUtils.sha1Hex(pass + passwortSalt).equals(passwortHash);
+        return DigestUtils.sha1Hex(pass + passwortSalt).equals(passwortHash);//TODO
 
     }
 
