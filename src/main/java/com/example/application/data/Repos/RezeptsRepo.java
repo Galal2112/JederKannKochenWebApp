@@ -20,4 +20,10 @@ public interface RezeptsRepo extends JpaRepository<Rezept, Integer> {
     List<Rezept> search(@Param("searchTerm") String searchTerm);
 
 
+    /*
+    @Query("select c from Rezept c " +
+            "where lower(c.zutaten) like lower(concat('%', :searchTerm, '%')) ")
+    List<Rezept> zutatsearch(@Param("searchTerm") String searchTerm);
+*/
+
 }

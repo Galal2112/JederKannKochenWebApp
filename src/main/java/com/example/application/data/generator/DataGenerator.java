@@ -68,6 +68,14 @@ public class DataGenerator {
 
             rezeptsRepo.save(new Rezept("video", users, "mombar", zutat, inhalt));
 
+            Zutat[] zutat2 = new Zutat[2];
+            zutat2[0]=new Zutat("Tomaten");
+            zutat2[1]=new Zutat("Reis");
+
+
+
+            rezeptsRepo.save(new Rezept("video", users, "kuchen", zutat2, inhalt));
+
 
             logger.info("Generated demo data");
         };

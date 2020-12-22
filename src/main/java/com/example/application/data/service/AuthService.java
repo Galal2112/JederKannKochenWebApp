@@ -67,7 +67,7 @@ public class AuthService {
         var routes = new ArrayList<AuthRoute>();
 
         if (role.equals(Role.USER)) {
-            routes.add(new AuthRoute("home", "Home", CardListView.class));//Hier werren die Routes bestimmt !!!!!!!!!!!!!!
+            routes.add(new AuthRoute("home", "Home", CardListView.class));//Hier werden die Routes bestimmt !!!!!!!!!!!!!!
             routes.add(new AuthRoute("logout", "Logout", LogoutView.class));
 
 

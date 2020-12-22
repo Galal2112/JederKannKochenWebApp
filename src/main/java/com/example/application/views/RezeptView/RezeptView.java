@@ -1,30 +1,17 @@
 package com.example.application.views.RezeptView;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Optional;
 
+import java.util.Arrays;
 
 import com.example.application.data.entity.Rezept;
-import com.example.application.data.entity.Zutat;
-import com.example.application.data.service.PersonService;
+
 import com.example.application.data.service.RezeptService;
-import com.vaadin.flow.component.AbstractField;
-import com.vaadin.flow.component.HasStyle;
-import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.button.ButtonVariant;
-import com.vaadin.flow.component.dependency.CssImport;
-import com.vaadin.flow.component.formlayout.FormLayout;
+
 import com.vaadin.flow.component.grid.Grid;
-import com.vaadin.flow.component.grid.GridVariant;
+
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.Label;
-import com.vaadin.flow.component.notification.Notification;
-import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.splitlayout.SplitLayout;
-import com.vaadin.flow.data.binder.BeanValidationBinder;
-import com.vaadin.flow.data.binder.ValidationException;
+
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 
@@ -36,6 +23,7 @@ import com.vaadin.flow.component.textfield.TextField;
 
 @Route("")
 @PageTitle("Master-Detail")
+
 public class RezeptView extends VerticalLayout {
 
 
@@ -55,8 +43,15 @@ public class RezeptView extends VerticalLayout {
         configureGrid();
         configureFilter();
 
+        Userform userform = new Userform();
 
-        add(filter, grid);
+        Div content = new Div(grid, userform);
+
+        content.addClassName("content");
+        content.setSizeFull();
+
+
+        add(filter, content);
         updatelist();
     }
 
