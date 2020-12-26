@@ -1,0 +1,16 @@
+        Thu, 07 Jan 2021 20:57:46 +0100 (CET)
+Date: Thu, 7 Jan 2021 20:57:45 +0100 (CET)
+From: test1@test.com
+To: test2@test.com
+Message-ID: <1384084439.3.1610049465992.JavaMail.Galal@galal>
+Subject: Test mail
+MIME-Version: 1.0
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_2_1167011301.1610049465980"
+
+------=_Part_2_1167011301.1610049465980
+Content-Type: text/html; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+
+Hello mail
+------=_Part_2_1167011301.1610049465980--
