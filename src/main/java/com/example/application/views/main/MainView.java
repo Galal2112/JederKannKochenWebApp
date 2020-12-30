@@ -1,6 +1,6 @@
 package com.example.application.views.main;
 
-import com.example.application.views.about.AboutView;
+import com.example.application.views.profile.MyProfile;
 import com.example.application.views.receipt.MyReceipt;
 import com.example.application.views.receipt.NewReceipt;
 import com.vaadin.flow.component.Component;
@@ -80,9 +80,9 @@ public class MainView extends AppLayout {
 
     private Component[] createMenuItems() {
         return new Tab[]{
-                createTab("About", AboutView.class),
-        createTab("Create new receipt", MyReceipt.class),
-        createTab("Receipts CRUD", NewReceipt.class)};
+                createTab("My profile", MyProfile.class),
+                createTab("Receipts CRUD", NewReceipt.class),
+                createTab("Create new receipt", MyReceipt.class)};
     }
 
     private static Tab createTab(String text, Class<? extends Component> navigationTarget) {
