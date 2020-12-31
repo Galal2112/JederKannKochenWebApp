@@ -3,6 +3,7 @@ package com.example.application.data.service;
 import com.example.application.data.Repos.UserRepo;
 import com.example.application.data.entity.Role;
 import com.example.application.data.entity.User;
+import com.example.application.views.RezeptView.RezeptView;
 import com.example.application.views.cardlist.CardListView;
 import com.example.application.views.logout.LogoutView;
 import com.example.application.views.main.MainView;
@@ -64,20 +65,19 @@ public class AuthService {
         var routes = new ArrayList<AuthRoute>();
 
         if (role.equals(Role.USER)) {
-            routes.add(new AuthRoute("home", "Home", CardListView.class));//Hier werden die Routes bestimmt !!!!!!!!!!!!!!
+            routes.add(new AuthRoute("home", "Home", CardListView.class));
             routes.add(new AuthRoute("logout", "Logout", LogoutView.class));
-
+            routes.add(new AuthRoute("rezept", "Rezept", RezeptView.class));
 
         } else if (role.equals(Role.ADMIN)) {
             routes.add(new AuthRoute("home", "Home", CardListView.class));
             routes.add(new AuthRoute("admin", "Admin", MasterDetailView.class));
             routes.add(new AuthRoute("logout", "Logout", LogoutView.class));
-          //  routes.add(new AuthRoute("rezept", "Rezept", RezeptView.class));
+
         }
 
         return routes;
     }
-
 
 
     public UserRepo getUserRepo() {

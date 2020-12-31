@@ -1,10 +1,9 @@
 package com.example.application.data.generator;
 
 
+import com.example.application.data.Repos.RezeptsRepo;
 import com.example.application.data.Repos.UserRepo;
-import com.example.application.data.entity.Person;
-import com.example.application.data.entity.Role;
-import com.example.application.data.entity.User;
+import com.example.application.data.entity.*;
 import com.example.application.data.service.PersonRepository;
 import com.vaadin.flow.spring.annotation.SpringComponent;
 import org.slf4j.Logger;
@@ -14,11 +13,13 @@ import org.springframework.context.annotation.Bean;
 import org.vaadin.artur.exampledata.DataType;
 import org.vaadin.artur.exampledata.ExampleDataGenerator;
 
+import java.util.ArrayList;
+
 @SpringComponent
 public class DataGenerator {
 
     @Bean
-    public CommandLineRunner loadData(PersonRepository personRepository, UserRepo userRepo/*, RezeptsRepo rezeptsRepo*/) {
+    public CommandLineRunner loadData(PersonRepository personRepository, UserRepo userRepo, RezeptsRepo rezeptsRepo) {
         return args -> {
             Logger logger = LoggerFactory.getLogger(getClass());
             if (personRepository.count() != 0L) {
@@ -45,38 +46,28 @@ public class DataGenerator {
             userRepo.save(new User("u", "1", Role.USER));
             userRepo.save(new User("a", "1", Role.ADMIN));
             userRepo.save(new User("Amro3", "12345", Role.USER));
-        };
-    }
-}
 
-
-
-
-/*
 
             ArrayList users = new ArrayList();
             String[] inhalt = {"Zwiebel", "Knolauch"};
 
             Zutat[] zutat = new Zutat[3];
-            zutat[0]=new Zutat("Tomaten");
-            zutat[1]=new Zutat("Reis");
-            zutat[2]=new Zutat("Pasta");
+            zutat[0] = new Zutat("Tomaten");
+            zutat[1] = new Zutat("Reis");
+            zutat[2] = new Zutat("Pasta");
 
 
-
-
-           // Zutat[] zutat = {};
+            // Zutat[] zutat = {};
 
             rezeptsRepo.save(new Rezept("https://www.youtube.com/watch", users, "koshary", zutat, inhalt));
 
-            rezeptsRepo.save(new Rezept("video", users, "pasta", zutat, inhalt));
+            rezeptsRepo.save(new Rezept("https://www.youtube.com/watch", users, "pasta", zutat, inhalt));
 
-            rezeptsRepo.save(new Rezept("video", users, "mombar", zutat, inhalt));
+            rezeptsRepo.save(new Rezept("https://www.youtube.com/watch", users, "mombar", zutat, inhalt));
 
             Zutat[] zutat2 = new Zutat[2];
-            zutat2[0]=new Zutat("Tomaten");
-            zutat2[1]=new Zutat("Reis");
-
+            zutat2[0] = new Zutat("Tomaten");
+            zutat2[1] = new Zutat("Reis");
 
 
             rezeptsRepo.save(new Rezept("video", users, "kuchen", zutat2, inhalt));
@@ -85,4 +76,5 @@ public class DataGenerator {
             logger.info("Generated demo data");
         };
 
- */
+    }
+}
