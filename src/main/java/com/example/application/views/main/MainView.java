@@ -1,17 +1,15 @@
 package com.example.application.views.main;
 
-import java.util.Optional;
-
-import com.example.application.data.entity.User;
 import com.example.application.data.service.AuthService;
+import com.example.application.views.cardlist.CardListView;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentUtil;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.dependency.JsModule;
-import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.H1;
+import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -20,11 +18,8 @@ import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.tabs.TabsVariant;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.RouterLink;
-import com.vaadin.flow.server.PWA;
-import com.vaadin.flow.server.VaadinSession;
-import com.vaadin.flow.theme.Theme;
-import com.example.application.views.main.MainView;
-import com.example.application.views.login.LoginView;
+
+import java.util.Optional;
 
 
 /**
@@ -86,10 +81,16 @@ public class MainView extends AppLayout {
     }
 
     private Component[] createMenuItems() {
+
+
+        return new Tab[]{createTab("Hello World", CardListView.class), createTab("About", CardListView.class)};
+        /*
         var user = VaadinSession.getCurrent().getAttribute(User.class);
         return authService.getAuthoRoutes(user.getRole()).stream()
                 .map(r -> createTab(r.name(), r.view()))
                 .toArray(Component[]::new);
+
+         */
     }
 
     private static Tab createTab(String text, Class<? extends Component> navigationTarget) {

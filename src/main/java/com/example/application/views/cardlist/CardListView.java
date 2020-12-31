@@ -1,8 +1,5 @@
 package com.example.application.views.cardlist;
 
-import java.util.Arrays;
-import java.util.List;
-
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.component.grid.Grid;
@@ -16,9 +13,13 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.AfterNavigationEvent;
 import com.vaadin.flow.router.AfterNavigationObserver;
 import com.vaadin.flow.router.PageTitle;
+import com.vaadin.flow.router.Route;
+
+import java.util.Arrays;
+import java.util.List;
 
 
-
+@Route("home")
 @PageTitle("Card List")
 @CssImport(value = "./styles/views/cardlist/card-list-view.css", include = "lumo-badge")
 @JsModule("@vaadin/vaadin-lumo-styles/badge.js")

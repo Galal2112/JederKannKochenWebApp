@@ -3,22 +3,11 @@ package com.example.application.data.service;
 import com.example.application.data.Repos.UserRepo;
 import com.example.application.data.entity.Role;
 import com.example.application.data.entity.User;
-import com.example.application.views.RezeptView.RezeptView;
-import com.example.application.views.about.AboutView;
-import com.example.application.views.cardlist.CardListView;
-import com.example.application.views.login.LoginView;
-import com.example.application.views.logout.LogoutView;
-import com.example.application.views.main.MainView;
-import com.example.application.views.masterdetail.MasterDetailView;
-import com.vaadin.flow.component.Component;
-import com.vaadin.flow.router.RouteConfiguration;
 import com.vaadin.flow.server.VaadinSession;
 import org.springframework.stereotype.Service;
 
 import javax.naming.AuthenticationException;
 import javax.security.auth.message.AuthException;
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class AuthService {
@@ -35,7 +24,7 @@ public class AuthService {
         User user = userRepo.getByUsername(username);
         if (user != null && user.checkueberEinStimmung(passwort)) {
             VaadinSession.getCurrent().setAttribute(User.class, user);
-            createRoutes(user.getRole());
+           // createRoutes(user.getRole());
         } else {
             throw new AuthException();
         }
@@ -50,7 +39,7 @@ public class AuthService {
 
     }
 
-
+/*
     public record AuthRoute(String route, String name, Class<? extends Component> view) {
 
     }
@@ -80,6 +69,8 @@ public class AuthService {
 
         return routes;
     }
+
+ */
 
     public UserRepo getUserRepo() {
         return userRepo;

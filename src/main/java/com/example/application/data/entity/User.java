@@ -5,10 +5,7 @@ import com.example.application.data.AbstractEntity;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 
-
 import javax.persistence.Entity;
-
-import java.util.ArrayList;
 
 import static org.apache.commons.codec.digest.DigestUtils.sha1Hex;
 
@@ -23,7 +20,7 @@ public class User extends AbstractEntity {
 
     private Role role;
 
-    private ArrayList<Rezept> rezepts;
+   // private ArrayList<Rezept> rezepts;
 
     public User() {
 
