@@ -149,17 +149,18 @@ public class MyRecipe extends Div {
         }
 
         void persist(Rezept item) {
-
-            final Optional<Rezept> existingItem = find(item.getId());
+            Optional<Rezept> existingItem = Optional.empty();
+            if (item.getId() != null) {
+                existingItem = find(item.getId());
+            }
             if (existingItem.isPresent()) {
                 int position = DATABASE.indexOf(existingItem.get());
                 DATABASE.remove(existingItem.get());
                 DATABASE.add(position, item);
                 service.updateRezept(existingItem.get().getId(), item.getRezeptName(), item.getInhalt());
             } else {
-                DATABASE.add(item);
                 // TODO: get creator from session
-                service.createRezept(null, item.getRezeptName(), item.getInhalt());
+                DATABASE.add(service.createRezept(null, item.getRezeptName(), item.getInhalt()));
             }
         }
 
