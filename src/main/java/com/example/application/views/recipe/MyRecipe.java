@@ -1,4 +1,4 @@
-package com.example.application.views.receipt;
+package com.example.application.views.recipe;
 
 
 import com.example.application.data.entity.Rezept;
@@ -26,11 +26,11 @@ import java.util.stream.Stream;
 
 @Route(value = "MyReceipt", layout = MainView.class)
 @PageTitle("My recipes")
-public class MyReceipt extends Div {
+public class MyRecipe extends Div {
 
     Crud<Rezept> crud = new Crud<>(Rezept.class, createRezeptEditor());
 
-    public MyReceipt(RezeptService rezeptService) {
+    public MyRecipe(RezeptService rezeptService) {
 
         RezeptDataProvider dataProvider = new RezeptDataProvider(rezeptService);
 
