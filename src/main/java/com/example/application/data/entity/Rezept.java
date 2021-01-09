@@ -10,6 +10,7 @@ import java.util.List;
 @Entity
 public class Rezept extends AbstractEntity {
     private String rezeptName;
+    @Lob
     private String inhalt;
     @ManyToOne(targetEntity=User.class, fetch = FetchType.LAZY)
     private User creator;

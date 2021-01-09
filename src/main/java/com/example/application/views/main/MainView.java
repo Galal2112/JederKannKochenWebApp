@@ -1,10 +1,12 @@
 package com.example.application.views.main;
 
 import com.example.application.views.about.AboutView;
+
 import com.example.application.views.notifications.NotificationSender;
 import com.example.application.views.notifications.NotificationsGridView;
 import com.example.application.views.receipt.MyReceipt;
 import com.example.application.views.receipt.NewReceipt;
+
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentUtil;
 import com.vaadin.flow.component.WebComponentExporter;
@@ -100,11 +102,12 @@ public class MainView extends AppLayout {
 
     private Component[] createMenuItems() {
         return new Tab[]{
-                createTab("Create new receipt", MyReceipt.class),
-                createTab("Receipts CRUD", NewReceipt.class),
+                createTab("Recipes CRUD", MyRecipe.class),
+                createTab("Create New Recipe", NewRecipe.class),
                 createTab("Send System notification", NotificationSender.class),
                 createTab("My notifications", NotificationsGridView.class),
                 createTab("About", AboutView.class)};
+
     }
 
     private static Tab createTab(String text, Class<? extends Component> navigationTarget) {

@@ -1,4 +1,4 @@
-package com.example.application.views.receipt;
+package com.example.application.views.recipe;
 
 
 import com.example.application.data.entity.Rezept;
@@ -26,11 +26,11 @@ import java.util.stream.Stream;
 
 @Route(value = "MyReceipt", layout = MainView.class)
 @PageTitle("My recipes")
-public class MyReceipt extends Div {
+public class MyRecipe extends Div {
 
     Crud<Rezept> crud = new Crud<>(Rezept.class, createRezeptEditor());
 
-    public MyReceipt(RezeptService rezeptService) {
+    public MyRecipe(RezeptService rezeptService) {
 
         RezeptDataProvider dataProvider = new RezeptDataProvider(rezeptService);
 
@@ -149,17 +149,18 @@ public class MyReceipt extends Div {
         }
 
         void persist(Rezept item) {
-
-            final Optional<Rezept> existingItem = find(item.getId());
+            Optional<Rezept> existingItem = Optional.empty();
+            if (item.getId() != null) {
+                existingItem = find(item.getId());
+            }
             if (existingItem.isPresent()) {
                 int position = DATABASE.indexOf(existingItem.get());
                 DATABASE.remove(existingItem.get());
                 DATABASE.add(position, item);
                 service.updateRezept(existingItem.get().getId(), item.getRezeptName(), item.getInhalt());
             } else {
-                DATABASE.add(item);
                 // TODO: get creator from session
-                service.createRezept(null, item.getRezeptName(), item.getInhalt());
+                DATABASE.add(service.createRezept(null, item.getRezeptName(), item.getInhalt()));
             }
         }
 

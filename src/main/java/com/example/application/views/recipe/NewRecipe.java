@@ -1,4 +1,4 @@
-package com.example.application.views.receipt;
+package com.example.application.views.recipe;
 
 import com.example.application.data.entity.Rezept;
 import com.example.application.data.entity.User;
@@ -14,17 +14,17 @@ import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
-@Route(value = "CreateNewReceipt", layout = MainView.class)
-@PageTitle("Create New receipt")
-public class NewReceipt extends Div {
+@Route(value = "CreateNewRecipe", layout = MainView.class)
+@PageTitle("Create New Recipe")
+public class NewRecipe extends Div {
 
-    private TextField rezeptName = new TextField("Receipt Name");
+    private TextField rezeptName = new TextField("Recipe Name");
     private Div valueBlock = new Div();
     private RichTextEditor inhalt = new RichTextEditor();
-    private Button saveBtn = new Button("Add new receipt");
+    private Button saveBtn = new Button("Add new Recipe");
     private Binder<Rezept> binder = new Binder(Rezept.class);
 
-    public NewReceipt(RezeptService rezeptService, UserService userService) {
+    public NewRecipe(RezeptService rezeptService, UserService userService) {
         binder.setBean(new Rezept());
         add(rezeptName, inhalt, saveBtn, valueBlock);
         binder.bindInstanceFields(this);
