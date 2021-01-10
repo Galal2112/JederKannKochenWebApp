@@ -1,8 +1,8 @@
 package com.example.application.views.main;
 
 import com.example.application.views.profile.MyProfile;
-import com.example.application.views.receipt.MyReceipt;
-import com.example.application.views.receipt.NewReceipt;
+import com.example.application.views.recipe.MyRecipe;
+import com.example.application.views.recipe.NewRecipe;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentUtil;
 import com.vaadin.flow.component.applayout.AppLayout;
