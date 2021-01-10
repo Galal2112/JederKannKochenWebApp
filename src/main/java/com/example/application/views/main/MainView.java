@@ -1,12 +1,10 @@
 package com.example.application.views.main;
 
 import com.example.application.views.about.AboutView;
-
 import com.example.application.views.notifications.NotificationSender;
 import com.example.application.views.notifications.NotificationsGridView;
-import com.example.application.views.receipt.MyReceipt;
-import com.example.application.views.receipt.NewReceipt;
-
+import com.example.application.views.recipe.MyRecipe;
+import com.example.application.views.recipe.NewRecipe;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentUtil;
 import com.vaadin.flow.component.WebComponentExporter;
