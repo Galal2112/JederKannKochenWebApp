@@ -1,6 +1,9 @@
 package com.example.application.views.main;
 
 import com.example.application.views.about.AboutView;
+import com.example.application.views.cardlist.CardListView;
+import com.example.application.views.helloworld.HelloWorldView;
+import com.example.application.views.masterdetail.MasterDetailView;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentUtil;
 import com.vaadin.flow.component.applayout.AppLayout;
@@ -77,8 +80,7 @@ public class MainView extends AppLayout {
     }
 
     private Component[] createMenuItems() {
-        return new Tab[]{
-                createTab("About", AboutView.class)};
+        return new Tab[]{ createTab("Master-Detail", MasterDetailView.class)};
     }
 
     private static Tab createTab(String text, Class<? extends Component> navigationTarget) {
