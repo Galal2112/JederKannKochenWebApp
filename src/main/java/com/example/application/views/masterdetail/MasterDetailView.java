@@ -29,7 +29,7 @@ import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.renderer.TemplateRenderer;
 
-@Route("home")
+
 @PageTitle("Master-Detail")
 @CssImport("./styles/views/masterdetail/master-detail-view.css")
 public class MasterDetailView extends Div {

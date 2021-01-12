@@ -41,7 +41,8 @@ public class DataGenerator {
             personRepositoryGenerator.setData(Person::setOccupation, DataType.OCCUPATION);
             personRepositoryGenerator.setData(Person::setImportant, DataType.BOOLEAN_10_90);
             personRepository.saveAll(personRepositoryGenerator.create(100, seed));
-            userRepo.save(new User("a", "a", Role.USER));
+            userRepo.save(new User("u", "u", Role.USER));
+            userRepo.save(new User("a", "a", Role.ADMIN));
             logger.info("Generated demo data");
         };
     }

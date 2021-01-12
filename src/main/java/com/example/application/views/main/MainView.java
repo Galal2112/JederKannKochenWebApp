@@ -1,5 +1,7 @@
 package com.example.application.views.main;
 
+import com.example.application.data.entity.User;
+import com.example.application.data.service.AuthService;
 import com.example.application.views.about.AboutView;
 import com.example.application.views.cardlist.CardListView;
 import com.example.application.views.helloworld.HelloWorldView;
@@ -20,6 +22,7 @@ import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.tabs.TabsVariant;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.RouterLink;
+import com.vaadin.flow.server.VaadinSession;
 
 import java.util.Optional;
 
@@ -32,8 +35,10 @@ public class MainView extends AppLayout {
 
     private final Tabs menu;
     private H1 viewTitle;
+    private AuthService authService;
 
-    public MainView() {
+    public MainView(AuthService authService) {
+        this.authService = authService;
         setPrimarySection(Section.DRAWER);
         addToNavbar(true, createHeaderContent());
         menu = createMenu();
@@ -80,7 +85,10 @@ public class MainView extends AppLayout {
     }
 
     private Component[] createMenuItems() {
-        return new Tab[]{ createTab("Master-Detail", MasterDetailView.class)};
+        var user = VaadinSession.getCurrent().getAttribute(User.class);
+        return authService.getAuthoRoutes(user.getRole()).stream()
+                .map(r -> createTab(r.name(), r.view()))
+                .toArray(Component[]::new);
     }
 
     private static Tab createTab(String text, Class<? extends Component> navigationTarget) {
