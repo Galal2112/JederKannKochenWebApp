@@ -21,6 +21,6 @@ public interface RezeptRepository extends JpaRepository<Rezept, Integer> {
 
     @Transactional
     @Modifying
-    @Query("update Rezept r set r.rezeptName = :name, r.inhalt = :inhalt where r.id = :rezeptId")
+    @Query("update Rezept r set r.rezeptName = :name, r.beschreibung = :inhalt where r.id = :rezeptId")
     void setRezeptInfoById(Integer rezeptId, String name, String inhalt);
 }

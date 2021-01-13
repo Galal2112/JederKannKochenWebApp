@@ -11,12 +11,10 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import com.vaadin.flow.router.RouteAlias;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Route(value = "admin-notifications", layout = MainView.class)
 @PageTitle("Admin Notifications")
-@RouteAlias(value = "", layout = MainView.class)
 public class NotificationSender extends VerticalLayout {
 
     public static final String DEFAULT_ROOM = "all";

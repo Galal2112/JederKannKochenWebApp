@@ -1,6 +1,6 @@
 package com.example.application.views.main;
 
-import com.example.application.views.about.AboutView;
+import com.example.application.views.profile.MyProfile;
 import com.example.application.views.notifications.NotificationSender;
 import com.example.application.views.notifications.NotificationsGridView;
 import com.example.application.views.recipe.MyRecipe;
@@ -100,12 +100,11 @@ public class MainView extends AppLayout {
 
     private Component[] createMenuItems() {
         return new Tab[]{
+                createTab("My profile", MyProfile.class),
                 createTab("Recipes CRUD", MyRecipe.class),
                 createTab("Create New Recipe", NewRecipe.class),
                 createTab("Send System notification", NotificationSender.class),
-                createTab("My notifications", NotificationsGridView.class),
-                createTab("About", AboutView.class)};
-
+                createTab("My notifications", NotificationsGridView.class)};
     }
 
     private static Tab createTab(String text, Class<? extends Component> navigationTarget) {
