@@ -7,14 +7,11 @@ import javax.persistence.Entity;
 @Entity
 public class Zutat extends AbstractEntity {
 
-
     private String name;
-
 
     public Zutat(String name) {
         this.name = name;
     }
-
 
     public String getName() {
         return name;
@@ -24,7 +21,6 @@ public class Zutat extends AbstractEntity {
         this.name = name;
     }
 
-
     @Override
     public String toString() {
         return "Zutat{" +
@@ -32,3 +28,4 @@ public class Zutat extends AbstractEntity {
                 '}';
     }
 }
+

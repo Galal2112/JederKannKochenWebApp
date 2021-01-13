@@ -26,24 +26,15 @@ public class RezeptView extends VerticalLayout {
 
     private Grid<Rezept> grid = new Grid<>(Rezept.class); // ein Grid fuer eine bestimmte Klasse
 
-
     public RezeptView(@Autowired RezeptService rezeptService) {
 
         this.rezeptService = rezeptService;
-
         setSizeFull();
-
         configureGrid();
         configureFilter();
-
-
-
         Div content = new Div(grid);
-
         content.addClassName("content");
         content.setSizeFull();
-
-
         add(filter, content);
         updatelist();
     }
@@ -78,7 +69,6 @@ public class RezeptView extends VerticalLayout {
 
             return inhalt == null ? " - " : str;
 
-
         }).setHeader("Inhalte");
 
 
@@ -98,12 +88,10 @@ public class RezeptView extends VerticalLayout {
 
         grid.getColumns().forEach(col -> col.setAutoWidth(true));//das alle Spalten genaug Platz fuer Ihre Inhalte haben
 
-
     }
 
     private void updatelist() {
         grid.setItems(rezeptService.findAll(filter.getValue()));
 
     }
-
 }

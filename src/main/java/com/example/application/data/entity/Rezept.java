@@ -32,9 +32,7 @@ public class Rezept extends AbstractEntity {
 
             this.zutaten[i] = zutaten[i].getName();
 
-
         }
-
 
     }
 
