@@ -54,7 +54,7 @@ public class MyRecipe extends Div {
 
         Binder<Rezept> binder = new Binder<>(Rezept.class);
         binder.bind(rezeptName, Rezept::getRezeptName, Rezept::setRezeptName);
-        binder.bind(inhalt, Rezept::getInhalt, Rezept::setInhalt);
+        binder.bind(inhalt, Rezept::getBeschreibung, Rezept::setBeschreibung);
 
         return new BinderCrudEditor<>(binder, form);
     }
@@ -157,10 +157,10 @@ public class MyRecipe extends Div {
                 int position = DATABASE.indexOf(existingItem.get());
                 DATABASE.remove(existingItem.get());
                 DATABASE.add(position, item);
-                service.updateRezept(existingItem.get().getId(), item.getRezeptName(), item.getInhalt());
+                service.updateRezept(existingItem.get().getId(), item.getRezeptName(), item.getBeschreibung());
             } else {
                 // TODO: get creator from session
-                DATABASE.add(service.createRezept(null, item.getRezeptName(), item.getInhalt()));
+                DATABASE.add(service.createRezept(null, item.getRezeptName(), item.getBeschreibung()));
             }
         }
 

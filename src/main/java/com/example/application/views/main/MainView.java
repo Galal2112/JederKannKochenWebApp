@@ -1,10 +1,13 @@
 package com.example.application.views.main;
 
 import com.example.application.views.profile.MyProfile;
+import com.example.application.views.notifications.NotificationSender;
+import com.example.application.views.notifications.NotificationsGridView;
 import com.example.application.views.recipe.MyRecipe;
 import com.example.application.views.recipe.NewRecipe;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentUtil;
+import com.vaadin.flow.component.WebComponentExporter;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.dependency.CssImport;
@@ -14,9 +17,11 @@ import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.page.Push;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.tabs.TabsVariant;
+import com.vaadin.flow.component.webcomponent.WebComponent;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.RouterLink;
 
@@ -25,9 +30,24 @@ import java.util.Optional;
 /**
  * The main view is a top-level placeholder for other views.
  */
+@Push
 @CssImport("./styles/views/main/main-view.css")
 @JsModule("./styles/shared-styles.js")
 public class MainView extends AppLayout {
+
+    @Push
+    public static class Exporter extends WebComponentExporter<NotificationSender> {
+
+        public Exporter() {
+            super("notifications-list");
+        }
+
+        @Override
+        public void configureInstance(WebComponent<NotificationSender> webComponent, NotificationSender component) {
+
+        }
+
+    }
 
     private final Tabs menu;
     private H1 viewTitle;
@@ -82,7 +102,9 @@ public class MainView extends AppLayout {
         return new Tab[]{
                 createTab("My profile", MyProfile.class),
                 createTab("Recipes CRUD", MyRecipe.class),
-                createTab("Create New Recipe", NewRecipe.class)};
+                createTab("Create New Recipe", NewRecipe.class),
+                createTab("Send System notification", NotificationSender.class),
+                createTab("My notifications", NotificationsGridView.class)};
     }
 
     private static Tab createTab(String text, Class<? extends Component> navigationTarget) {

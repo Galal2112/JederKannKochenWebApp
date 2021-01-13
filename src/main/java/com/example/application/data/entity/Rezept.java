@@ -11,7 +11,7 @@ import java.util.List;
 public class Rezept extends AbstractEntity {
     private String rezeptName;
     @Lob
-    private String inhalt;
+    private String beschreibung;
     @ManyToOne(targetEntity=User.class, fetch = FetchType.LAZY)
     private User creator;
     @OneToMany(
@@ -32,9 +32,9 @@ public class Rezept extends AbstractEntity {
     public Rezept() {
     }
 
-    public Rezept(String rezeptName, String inhalt) {
+    public Rezept(String rezeptName, String beschreibung) {
         this.rezeptName = rezeptName;
-        this.inhalt = inhalt;
+        this.beschreibung = beschreibung;
     }
 
     public String getRezeptName() {
@@ -45,12 +45,12 @@ public class Rezept extends AbstractEntity {
         this.rezeptName = rezeptName;
     }
 
-    public String getInhalt() {
-        return inhalt;
+    public String getBeschreibung() {
+        return beschreibung;
     }
 
-    public void setInhalt(String inhalt) {
-        this.inhalt = inhalt;
+    public void setBeschreibung(String inhalt) {
+        this.beschreibung = inhalt;
     }
 
     public User getCreator() {

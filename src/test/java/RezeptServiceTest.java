@@ -47,7 +47,7 @@ public class RezeptServiceTest {
         Rezept rezept = subject.createRezept(creator, rezeptName, inhalt);
         assertNotNull(rezept.getId());
         assertEquals(rezept.getRezeptName(), rezeptName);
-        assertEquals(rezept.getInhalt(), inhalt);
+        assertEquals(rezept.getBeschreibung(), inhalt);
     }
 
     @Test
@@ -69,20 +69,20 @@ public class RezeptServiceTest {
         List<Rezept> rezepte = subject.getUserRezepte(creator.getId());
         assertEquals(rezepte.size(), 2);
         assertEquals(rezepte.get(0).getRezeptName(), rezept1.getRezeptName());
-        assertEquals(rezepte.get(0).getInhalt(), rezept1.getInhalt());
+        assertEquals(rezepte.get(0).getBeschreibung(), rezept1.getBeschreibung());
         assertEquals(rezepte.get(1).getRezeptName(), rezept2.getRezeptName());
-        assertEquals(rezepte.get(1).getInhalt(), rezept2.getInhalt());
+        assertEquals(rezepte.get(1).getBeschreibung(), rezept2.getBeschreibung());
     }
 
     @Test
     public void testUpdateRezept() {
         Rezept rezept = subject.createRezept(creator, "rezeptName" + rand.nextInt(), "inhalt" + rand.nextInt());
         String suffix = "#updated";
-        subject.updateRezept(rezept.getId(), rezept.getRezeptName() + suffix, rezept.getInhalt() + suffix);
+        subject.updateRezept(rezept.getId(), rezept.getRezeptName() + suffix, rezept.getBeschreibung() + suffix);
         Rezept dbRezept = subject.get(rezept.getId()).get();
         assertNotNull(dbRezept);
         assertEquals(rezept.getRezeptName() + suffix, dbRezept.getRezeptName());
-        assertEquals(rezept.getInhalt() + suffix, dbRezept.getInhalt());
+        assertEquals(rezept.getBeschreibung() + suffix, dbRezept.getBeschreibung());
     }
 
     @Test

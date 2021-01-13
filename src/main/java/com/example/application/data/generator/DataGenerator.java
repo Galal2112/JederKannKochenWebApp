@@ -24,8 +24,8 @@ public class DataGenerator {
         return args -> {
             Logger logger = LoggerFactory.getLogger(getClass());
             logger.info("... generating entities...");
-            Video video1 = new Video("test url1");
-            Video video2 = new Video("test url2");
+            Video video1 = new Video("https//jederkannkochen.com/1");
+            Video video2 = new Video("https//jederkannkochen.com/2");
             Zutat zutat1 = new Zutat(2, "Kaese");
             Zutat zutat2 = new Zutat(3, "Brot");
             Rezept rezept1 = new Rezept("Kaesebroetchen", "Pizza");
