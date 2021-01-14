@@ -33,12 +33,8 @@ public class User extends AbstractEntity {
         this.passwortHash = sha1Hex(passwort + passwortSalt);
     }
 
-
     public boolean checkueberEinStimmung(String pass) {
-
-
         return DigestUtils.sha1Hex(pass + passwortSalt).equals(passwortHash);
-
     }
 
     public String getUsername() {
@@ -64,7 +60,6 @@ public class User extends AbstractEntity {
     public void setPasswortHash(String passwortHash) {
         this.passwortHash = passwortHash;
     }
-
 
     public Role getRole() {
         return role;

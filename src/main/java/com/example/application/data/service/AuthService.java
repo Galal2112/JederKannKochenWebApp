@@ -14,7 +14,6 @@ import javax.security.auth.message.AuthException;
 @Service
 public class AuthService {
 
-
     private final UserRepo userRepo;
 
     public AuthService(UserRepo userRepo) {
