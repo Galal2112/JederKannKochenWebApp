@@ -1,9 +1,17 @@
 package com.example.application.views.main;
 
-import java.util.Optional;
-
+import com.example.application.views.about.AboutView;
+import com.example.application.views.cardlist.CardListView;
+import com.example.application.views.dashboard.DashboardView;
+import com.example.application.views.login.LoginView;
+import com.example.application.views.notifications.NotificationSender;
+import com.example.application.views.notifications.NotificationsGridView;
+import com.example.application.views.profile.MyProfile;
+import com.example.application.views.recipe.MyRecipe;
+import com.example.application.views.recipe.NewRecipe;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentUtil;
+import com.vaadin.flow.component.WebComponentExporter;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.dependency.JsModule;
@@ -15,14 +23,10 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.TabVariant;
 import com.vaadin.flow.component.tabs.Tabs;
+import com.vaadin.flow.component.webcomponent.WebComponent;
 import com.vaadin.flow.router.RouterLink;
-import com.vaadin.flow.server.PWA;
-import com.vaadin.flow.theme.Theme;
-import com.example.application.views.main.MainView;
-import com.example.application.views.dashboard.DashboardView;
-import com.example.application.views.profile.ProfileView;
-import com.example.application.views.login.LoginView;
-import com.example.application.views.about.AboutView;
+
+import java.util.Optional;
 
 /**
  * The main view is a top-level placeholder for other views.
@@ -31,6 +35,19 @@ import com.example.application.views.about.AboutView;
 @CssImport("./styles/views/main/main-view.css")
 @JsModule("./styles/shared-styles.js")
 public class MainView extends AppLayout {
+
+    public static class Exporter extends WebComponentExporter<NotificationSender> {
+
+        public Exporter() {
+            super("notifications-list");
+        }
+
+        @Override
+        public void configureInstance(WebComponent<NotificationSender> webComponent, NotificationSender component) {
+
+        }
+
+    }
 
     private final Tabs menu;
 
@@ -77,7 +94,11 @@ public class MainView extends AppLayout {
 
     private static Tab[] getAvailableTabs() {
         return new Tab[]{createTab("Dashboard", DashboardView.class),
-                createTab("Profile", ProfileView.class),
+                createTab("Profile", MyProfile.class),
+                createTab("Home", CardListView.class),
+                createTab("Create New Recipe", NewRecipe.class),
+                createTab("Recipes CRUD", MyRecipe.class),
+                createTab("Notifications", NotificationsGridView.class),
                 createTab("Login", LoginView.class), createTab("About", AboutView.class)};
     }
 
