@@ -1,13 +1,13 @@
 package com.example.application.data.generator;
 
-import com.example.application.data.Repos.UserRepo;
-import com.example.application.data.entity.Role;
-import com.example.application.data.entity.User;
-import com.vaadin.flow.spring.annotation.SpringComponent;
-
 import com.example.application.data.Repos.PersonRepository;
-import com.example.application.data.entity.Person;
-
+import com.example.application.data.Repos.UserRepo;
+import com.example.application.data.entity.*;
+import com.example.application.data.repository.RezeptRepository;
+import com.example.application.data.repository.UserRepository;
+import com.example.application.data.repository.VideoRepository;
+import com.example.application.data.repository.ZutatRepository;
+import com.vaadin.flow.spring.annotation.SpringComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -15,22 +15,43 @@ import org.springframework.context.annotation.Bean;
 import org.vaadin.artur.exampledata.DataType;
 import org.vaadin.artur.exampledata.ExampleDataGenerator;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
+
 @SpringComponent
 public class DataGenerator {
 
     @Bean
-    public CommandLineRunner loadData(PersonRepository personRepository , UserRepo userRepo) {
+    public CommandLineRunner loadData(UserRepository userRepository, RezeptRepository rezeptRepository,
+                                      ZutatRepository zutatRepository, VideoRepository videoRepository,
+                                      PersonRepository personRepository, UserRepo userRepo) {
         return args -> {
             Logger logger = LoggerFactory.getLogger(getClass());
-            if (personRepository.count() != 0L) {
-                logger.info("Using existing database");
-                return;
-            }
+            logger.info("... generating entities...");
+            Video video1 = new Video("https//jederkannkochen.com/1");
+            Video video2 = new Video("https//jederkannkochen.com/2");
+            Zutat zutat1 = new Zutat(2, "Kaese");
+            Zutat zutat2 = new Zutat(3, "Brot");
+            Rezept rezept1 = new Rezept("Kaesebroetchen", "Pizza");
+            User adminUser = new User("Galal","Ahmed", "test@google.com",
+                    "+49 17827646545", LocalDate.of(1900, 12, 12),
+                    "123456", Role.ADMIN, Gender.MALE);
+            userRepository.save(adminUser);
+            rezept1.setCreator(adminUser);
+            rezeptRepository.save(rezept1);
+            video1.setRezept(rezept1);
+            video2.setRezept(rezept1);
+            videoRepository.save(video1);
+            videoRepository.save(video2);
+            zutat1.setRezept(rezept1);
+            zutat2.setRezept(rezept1);
+            zutatRepository.save(zutat1);
+            zutatRepository.save(zutat2);
+            rezept1.setZutaten(new ArrayList<>(Arrays.asList(zutat1, zutat2)));
+
+            // Person
             int seed = 123;
-
-            logger.info("Generating demo data");
-
-            logger.info("... generating 100 Person entities...");
             ExampleDataGenerator<Person> personRepositoryGenerator = new ExampleDataGenerator<>(Person.class);
             personRepositoryGenerator.setData(Person::setId, DataType.ID);
             personRepositoryGenerator.setData(Person::setFirstName, DataType.FIRST_NAME);
@@ -41,10 +62,12 @@ public class DataGenerator {
             personRepositoryGenerator.setData(Person::setOccupation, DataType.OCCUPATION);
             personRepositoryGenerator.setData(Person::setImportant, DataType.BOOLEAN_10_90);
             personRepository.saveAll(personRepositoryGenerator.create(100, seed));
+
+            userRepo.save(new User("user", "user12345", Role.USER));//Nur Zum Testen
+
             userRepo.save(new User("u", "u", Role.USER));
             userRepo.save(new User("a", "a", Role.ADMIN));
             logger.info("Generated demo data");
         };
     }
-
 }

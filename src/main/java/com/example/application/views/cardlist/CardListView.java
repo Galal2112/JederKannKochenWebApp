@@ -1,8 +1,5 @@
 package com.example.application.views.cardlist;
 
-import java.util.Arrays;
-import java.util.List;
-
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.component.grid.Grid;
@@ -16,8 +13,9 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.AfterNavigationEvent;
 import com.vaadin.flow.router.AfterNavigationObserver;
 import com.vaadin.flow.router.PageTitle;
-import com.vaadin.flow.router.Route;
-import com.example.application.views.main.MainView;
+
+import java.util.Arrays;
+import java.util.List;
 
 
 @PageTitle("Card List")

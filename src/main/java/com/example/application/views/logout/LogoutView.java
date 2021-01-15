@@ -11,7 +11,6 @@ import com.vaadin.flow.server.VaadinSession;
 @PageTitle("Logout")
 public class LogoutView extends Composite<VerticalLayout> {
 
-
     public LogoutView() {
         UI.getCurrent().getPage().setLocation("login");
         VaadinSession.getCurrent().getSession().invalidate();
