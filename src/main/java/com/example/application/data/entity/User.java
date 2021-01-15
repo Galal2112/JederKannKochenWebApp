@@ -1,6 +1,8 @@
 package com.example.application.data.entity;
 
 import com.example.application.data.AbstractEntity;
+import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.lang3.RandomStringUtils;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -9,7 +11,9 @@ import java.util.List;
 
 @Entity
 public class User extends AbstractEntity {
-
+    private String passwortSalt;
+    private String passwortHash;
+    private String username;
     private String firstName;
     private String lastName;
     @Column(unique = true)
@@ -32,6 +36,13 @@ public class User extends AbstractEntity {
 
     public User() {}
 
+    public User(String username, String passwort, Role role) {
+        this.username = username;
+        this.role = role;
+        this.passwortSalt = RandomStringUtils.random(32);
+        this.passwortHash = DigestUtils.sha1Hex(passwort + passwortSalt);
+    }
+
     public User(String firstName, String lastName, String email, String phone, LocalDate dateOfBirth, String password, Role role, Gender gender) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -41,6 +52,20 @@ public class User extends AbstractEntity {
         this.password = password;
         this.role = role;
         this.gender = gender;
+        this.passwortSalt = RandomStringUtils.random(32);
+        this.passwortHash = DigestUtils.sha1Hex(password + passwortSalt);
+    }
+
+    public boolean checkueberEinStimmung(String pass) {
+        return DigestUtils.sha1Hex(pass + passwortSalt).equals(passwortHash);
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getFirstName() {

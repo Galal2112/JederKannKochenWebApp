@@ -1,8 +1,9 @@
 package com.example.application.views.main;
 
-import com.example.application.views.profile.MyProfile;
+import com.example.application.views.masterdetail.MasterDetailView;
 import com.example.application.views.notifications.NotificationSender;
 import com.example.application.views.notifications.NotificationsGridView;
+import com.example.application.views.profile.MyProfile;
 import com.example.application.views.recipe.MyRecipe;
 import com.example.application.views.recipe.NewRecipe;
 import com.vaadin.flow.component.Component;
@@ -101,6 +102,7 @@ public class MainView extends AppLayout {
     private Component[] createMenuItems() {
         return new Tab[]{
                 createTab("My profile", MyProfile.class),
+                createTab("Master-Detail", MasterDetailView.class),
                 createTab("Recipes CRUD", MyRecipe.class),
                 createTab("Create New Recipe", NewRecipe.class),
                 createTab("Send System notification", NotificationSender.class),
