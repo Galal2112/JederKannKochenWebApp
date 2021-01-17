@@ -1,7 +1,6 @@
 package com.example.application.data.generator;
 
-import com.example.application.data.Repos.PersonRepository;
-import com.example.application.data.Repos.UserRepo;
+
 import com.example.application.data.entity.*;
 import com.example.application.data.repository.RezeptRepository;
 import com.example.application.data.repository.UserRepository;
@@ -24,8 +23,8 @@ public class DataGenerator {
 
     @Bean
     public CommandLineRunner loadData(UserRepository userRepository, RezeptRepository rezeptRepository,
-                                      ZutatRepository zutatRepository, VideoRepository videoRepository,
-                                      PersonRepository personRepository, UserRepo userRepo) {
+                                      ZutatRepository zutatRepository, VideoRepository videoRepository
+                                      ) {
         return args -> {
             Logger logger = LoggerFactory.getLogger(getClass());
             logger.info("... generating entities...");
@@ -50,20 +49,11 @@ public class DataGenerator {
             zutatRepository.save(zutat2);
             rezept1.setZutaten(new ArrayList<>(Arrays.asList(zutat1, zutat2)));
 
-            // Person
-            int seed = 123;
-            ExampleDataGenerator<Person> personRepositoryGenerator = new ExampleDataGenerator<>(Person.class);
-            personRepositoryGenerator.setData(Person::setId, DataType.ID);
-            personRepositoryGenerator.setData(Person::setFirstName, DataType.FIRST_NAME);
-            personRepositoryGenerator.setData(Person::setLastName, DataType.LAST_NAME);
-            personRepositoryGenerator.setData(Person::setEmail, DataType.EMAIL);
-            personRepositoryGenerator.setData(Person::setPhone, DataType.PHONE_NUMBER);
-            personRepositoryGenerator.setData(Person::setDateOfBirth, DataType.DATE_OF_BIRTH);
-            personRepositoryGenerator.setData(Person::setOccupation, DataType.OCCUPATION);
-            personRepositoryGenerator.setData(Person::setImportant, DataType.BOOLEAN_10_90);
-            personRepository.saveAll(personRepositoryGenerator.create(100, seed));
 
-            userRepo.save(new User("user", "user12345", Role.USER));//Nur Zum Testen
+
+            userRepository.save(new User("user", "user12345", Role.USER));//Nur Zum Testen
+
+            userRepository.save(new User("admin", "admin000", Role.ADMIN));
             logger.info("Generated demo data");
         };
     }

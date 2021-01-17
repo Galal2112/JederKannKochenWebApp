@@ -25,12 +25,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-@Route(value = "notifications", layout = MainView.class)
+
 @PageTitle("My notifications")
 public class NotificationsGridView extends Div implements AfterNavigationObserver {
 
     private UserNotificationService notificationService;
+
     private Grid<UserNotification> grid = new Grid<>(UserNotification.class);
+
     private Registration registration;
 
     public NotificationsGridView(@Autowired UserNotificationService notificationService) {
@@ -74,7 +76,8 @@ public class NotificationsGridView extends Div implements AfterNavigationObserve
         registration.remove();
     }
 
-    private void refreshList() {
+    private void refreshList() {//TODO , HIER !
+
         List<UserNotification> dbNotifications = notificationService.getUserNotifications(1);
         grid.setItems(dbNotifications);
         grid.getDataProvider().refreshAll();

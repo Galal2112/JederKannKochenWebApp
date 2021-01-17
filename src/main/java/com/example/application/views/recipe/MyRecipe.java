@@ -2,6 +2,7 @@ package com.example.application.views.recipe;
 
 
 import com.example.application.data.entity.Rezept;
+import com.example.application.data.entity.User;
 import com.example.application.data.service.RezeptService;
 import com.example.application.views.main.MainView;
 import com.vaadin.flow.component.crud.*;
@@ -15,6 +16,7 @@ import com.vaadin.flow.data.provider.Query;
 import com.vaadin.flow.data.provider.SortDirection;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.server.VaadinSession;
 
 import java.lang.reflect.Field;
 import java.util.Comparator;
@@ -24,7 +26,6 @@ import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
-@Route(value = "MyReceipt", layout = MainView.class)
 @PageTitle("My recipes")
 public class MyRecipe extends Div {
 
@@ -48,6 +49,7 @@ public class MyRecipe extends Div {
     }
 
     private CrudEditor<Rezept> createRezeptEditor() {
+
         TextField rezeptName = new TextField("Name");
         TextArea inhalt = new TextArea("Inhalt");
         FormLayout form = new FormLayout(rezeptName, inhalt);
@@ -67,7 +69,9 @@ public class MyRecipe extends Div {
 
         public RezeptDataProvider(RezeptService service) {
             this.service = service;
-            this.DATABASE = service.getAllRezepte();
+            //this.DATABASE = service.getAllRezepte();
+            var user = VaadinSession.getCurrent().getAttribute(User.class);
+           this.DATABASE= (List<Rezept>) service.getUserRezepte(user.getId());
         }
 
         @Override
@@ -160,7 +164,9 @@ public class MyRecipe extends Div {
                 service.updateRezept(existingItem.get().getId(), item.getRezeptName(), item.getBeschreibung());
             } else {
                 // TODO: get creator from session
-                DATABASE.add(service.createRezept(null, item.getRezeptName(), item.getBeschreibung()));
+                var user = VaadinSession.getCurrent().getAttribute(User.class);
+               DATABASE.add(service.createRezept(user, item.getRezeptName(), item.getBeschreibung()));
+
             }
         }
 

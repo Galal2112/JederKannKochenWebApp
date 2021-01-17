@@ -13,8 +13,9 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.server.VaadinSession;
 
-@Route(value = "CreateNewRecipe", layout = MainView.class)
+
 @PageTitle("Create New Recipe")
 public class NewRecipe extends Div {
 
@@ -30,8 +31,9 @@ public class NewRecipe extends Div {
         binder.bindInstanceFields(this);
         saveBtn.addClickListener(e -> {
             // TODO: get user from session
-            User creator = userService.login("test@google.com", "123456");
-            rezeptService.createRezept(creator, rezeptName.getValue(), inhalt.getHtmlValue());
+            var user = VaadinSession.getCurrent().getAttribute(User.class);
+         //   User creator = userService.login("test@google.com", "123456");
+            rezeptService.createRezept(user, rezeptName.getValue(), inhalt.getHtmlValue());
             Notification.show("Recipe created.");
             binder.setBean(new Rezept());
         });

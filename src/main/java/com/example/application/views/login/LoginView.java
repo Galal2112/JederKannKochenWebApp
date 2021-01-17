@@ -11,6 +11,7 @@ import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.router.RouteAlias;
 import com.vaadin.flow.router.RouterLink;
 
 import javax.naming.AuthenticationException;
@@ -18,10 +19,9 @@ import javax.security.auth.message.AuthException;
 
 
 @Route(value = "login")
+@RouteAlias("")
 @PageTitle("Login")
 @CssImport("./styles/views/login.css")
-
-
 public class LoginView extends Div {
     private final AuthService auth;
 

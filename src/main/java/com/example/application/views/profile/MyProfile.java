@@ -23,7 +23,6 @@ import com.vaadin.flow.component.upload.receivers.MemoryBuffer;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import com.vaadin.flow.router.RouteAlias;
 import com.vaadin.flow.server.StreamResource;
 import org.apache.commons.io.IOUtils;
 
@@ -31,10 +30,9 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-@Route(value = "myProfile", layout = MainView.class)
+
 @PageTitle("Profile Information")
 @CssImport("./styles/views/myProfile/my-profile.css")
-@RouteAlias(value = "", layout = MainView.class)
 public class MyProfile extends Div {
 
     private Image profileImage = new Image("images/user.svg", "Avatar");

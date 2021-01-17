@@ -1,11 +1,8 @@
 package com.example.application.views.main;
 
-import com.example.application.views.masterdetail.MasterDetailView;
+import com.example.application.data.entity.User;
+import com.example.application.data.service.AuthService;
 import com.example.application.views.notifications.NotificationSender;
-import com.example.application.views.notifications.NotificationsGridView;
-import com.example.application.views.profile.MyProfile;
-import com.example.application.views.recipe.MyRecipe;
-import com.example.application.views.recipe.NewRecipe;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentUtil;
 import com.vaadin.flow.component.WebComponentExporter;
@@ -25,6 +22,7 @@ import com.vaadin.flow.component.tabs.TabsVariant;
 import com.vaadin.flow.component.webcomponent.WebComponent;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.RouterLink;
+import com.vaadin.flow.server.VaadinSession;
 
 import java.util.Optional;
 
@@ -52,8 +50,10 @@ public class MainView extends AppLayout {
 
     private final Tabs menu;
     private H1 viewTitle;
+    private AuthService authService;
 
-    public MainView() {
+    public MainView(AuthService authService) {
+        this.authService = authService;
         setPrimarySection(Section.DRAWER);
         addToNavbar(true, createHeaderContent());
         menu = createMenu();
@@ -100,13 +100,10 @@ public class MainView extends AppLayout {
     }
 
     private Component[] createMenuItems() {
-        return new Tab[]{
-                createTab("My profile", MyProfile.class),
-                createTab("Master-Detail", MasterDetailView.class),
-                createTab("Recipes CRUD", MyRecipe.class),
-                createTab("Create New Recipe", NewRecipe.class),
-                createTab("Send System notification", NotificationSender.class),
-                createTab("My notifications", NotificationsGridView.class)};
+        var user = VaadinSession.getCurrent().getAttribute(User.class);
+        return authService.getAuthoRoutes(user.getRole()).stream()
+                .map(r -> createTab(r.name(), r.view()))
+                .toArray(Component[]::new);
     }
 
     private static Tab createTab(String text, Class<? extends Component> navigationTarget) {
