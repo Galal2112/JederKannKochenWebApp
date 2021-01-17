@@ -99,7 +99,7 @@ public class DashboardView extends Div implements AfterNavigationObserver {
 
         XAxis x = new XAxis();
         x.setCrosshair(new Crosshair());
-        x.setCategories("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
+        x.setCategories(names(Monat.values()));
         configuration.addxAxis(x);
 
         YAxis y = new YAxis();
@@ -131,11 +131,18 @@ public class DashboardView extends Div implements AfterNavigationObserver {
 
         x = new XAxis();
         x.setCrosshair(new Crosshair());
-        x.setCategories("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
+        x.setCategories(names(Monat.values()));
         configuration.addxAxis(x);
 
         y = new YAxis();
         y.setMin(0);
         configuration.addyAxis(y);
+    }
+    public static String[] names(Monat[] monat) {
+        String[] names = new String[monat.length];
+        for (int i = 0; i < monat.length; i++) {
+            names[i] = monat[i].name();
+        }
+        return names;
     }
 }
