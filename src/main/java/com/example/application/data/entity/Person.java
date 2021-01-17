@@ -58,5 +58,4 @@ public class Person extends AbstractEntity {
     public void setImportant(boolean important) {
         this.important = important;
     }
-
 }

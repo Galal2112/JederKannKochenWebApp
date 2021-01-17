@@ -11,9 +11,6 @@ import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Arrays;
-
-
 
 @PageTitle("Verfügbare Rezepte")
 
@@ -53,37 +50,36 @@ public class RezeptView extends VerticalLayout {
 
         grid.setSizeFull();
 
-        grid.removeColumnByKey("inhalt");// da es gibt die Objekt-addresse , weil das Objekt aus mehreren
-        // Objekten besteht (array , arraylist , usw . )
+        grid.removeColumnByKey("id");
+
+        grid.removeColumnByKey("creator");
+
+        grid.removeColumnByKey("beschreibung");
 
         grid.removeColumnByKey("zutaten");
 
-        grid.setColumns("rezeptname", "video");
+        grid.removeColumnByKey("videos");
 
         grid.addColumn(rezept -> {
-
-            String[] inhalt = rezept.getInhalt();
-
-            String str = Arrays.toString(inhalt);
-
-
-            return inhalt == null ? " - " : str;
+            return rezept.getBeschreibung();
 
         }).setHeader("Inhalte");
 
-
+       /*
         grid.addColumn(rezept -> {
 
-            String[] zutats = rezept.getZutaten();
+            List<Zutat> zutats = rezept.getZutaten();
 
-
-            String str = Arrays.toString(zutats);
-
+            String[] zutatNamen = new String[zutats.size()];
+            for (int i = 0; i < zutats.size(); i++) {
+                zutatNamen[i] = zutats.get(i).getItem();
+            }
+            String str = Arrays.toString(zutatNamen);
 
             return zutats == null ? " - " : str;
 
-
         }).setHeader("Zutaten");
+        */
 
 
         grid.getColumns().forEach(col -> col.setAutoWidth(true));//das alle Spalten genaug Platz fuer Ihre Inhalte haben

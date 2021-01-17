@@ -2,86 +2,78 @@ package com.example.application.data.entity;
 
 import com.example.application.data.AbstractEntity;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
 public class Rezept extends AbstractEntity {
-
-
-    private String rezeptname;
-
-    private String[] inhalt;
-
-    private String video;
-
-    private String[] zutaten;
-
-    private ArrayList<User> users;
-
-
-    public Rezept(String video, ArrayList<User> users, String name, Zutat[] zutaten, String[] inhalt) {
-        this.video = video;
-        this.users = users;
-        this.rezeptname = name;
-        this.inhalt = inhalt;
-
-        this.zutaten = new String[zutaten.length];
-        for (int i = 0; i < zutaten.length; i++) {
-
-            this.zutaten[i] = zutaten[i].getName();
-
-        }
-
-    }
+    private String rezeptName;
+    @Lob
+    private String beschreibung;
+    @ManyToOne(targetEntity=User.class, fetch = FetchType.LAZY)
+    private User creator;
+    @OneToMany(
+            targetEntity= Zutat.class,
+            mappedBy = "rezept",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<Zutat> zutaten = new ArrayList<>();
+    @OneToMany(
+            targetEntity= Video.class,
+            mappedBy = "rezept",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<Video> videos = new ArrayList<>();
 
     public Rezept() {
-
     }
 
-    public String getRezeptname() {
-        return rezeptname;
+    public Rezept(String rezeptName, String beschreibung) {
+        this.rezeptName = rezeptName;
+        this.beschreibung = beschreibung;
     }
 
-    public void setRezeptname(String rezeptname) {
-        this.rezeptname = rezeptname;
+    public String getRezeptName() {
+        return rezeptName;
     }
 
-    public String[] getInhalt() {
-        return inhalt;
+    public void setRezeptName(String rezeptName) {
+        this.rezeptName = rezeptName;
     }
 
-    public void setInhalt(String[] inhalt) {
-        this.inhalt = inhalt;
+    public String getBeschreibung() {
+        return beschreibung;
     }
 
-    public String[] getZutaten() {
+    public void setBeschreibung(String inhalt) {
+        this.beschreibung = inhalt;
+    }
+
+    public User getCreator() {
+        return creator;
+    }
+
+    public void setCreator(User creator) {
+        this.creator = creator;
+    }
+
+    public List<Zutat> getZutaten() {
         return zutaten;
     }
 
-    public void setZutaten(String[] zutaten) {
+    public void setZutaten(List<Zutat> zutaten) {
         this.zutaten = zutaten;
     }
 
-    public String getVideo() {
-        return video;
+    public List<Video> getVideos() {
+        return videos;
     }
 
-    public void setVideo(String video) {
-        this.video = video;
-    }
-
-    public ArrayList<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(ArrayList<User> users) {
-        this.users = users;
-    }
-
-    public static Object isImportant(Rezept rezept) {
-
-        return null;
+    public void setVideos(List<Video> videos) {
+        this.videos = videos;
     }
 }
