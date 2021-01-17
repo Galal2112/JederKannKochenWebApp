@@ -4,7 +4,6 @@ package com.example.application.views.recipe;
 import com.example.application.data.entity.Rezept;
 import com.example.application.data.entity.User;
 import com.example.application.data.service.RezeptService;
-import com.example.application.views.main.MainView;
 import com.vaadin.flow.component.crud.*;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.Div;
@@ -15,7 +14,6 @@ import com.vaadin.flow.data.provider.AbstractBackEndDataProvider;
 import com.vaadin.flow.data.provider.Query;
 import com.vaadin.flow.data.provider.SortDirection;
 import com.vaadin.flow.router.PageTitle;
-import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.VaadinSession;
 
 import java.lang.reflect.Field;
@@ -163,10 +161,8 @@ public class MyRecipe extends Div {
                 DATABASE.add(position, item);
                 service.updateRezept(existingItem.get().getId(), item.getRezeptName(), item.getBeschreibung());
             } else {
-                // TODO: get creator from session
-                var user = VaadinSession.getCurrent().getAttribute(User.class);
+                User user = VaadinSession.getCurrent().getAttribute(User.class);
                DATABASE.add(service.createRezept(user, item.getRezeptName(), item.getBeschreibung()));
-
             }
         }
 

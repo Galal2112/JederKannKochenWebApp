@@ -32,10 +32,10 @@ public class UserNotificationService extends CrudService<UserNotification, Integ
     public UserNotification sendNotificationToAllUser(User sender, String message) throws IllegalArgumentException {
         return createNotification(sender, null, message);
     }
-/*
+
     public UserNotification sendNotificationToUser(User sender, int receiverId, String message) throws IllegalArgumentException {
         return createNotification(sender, receiverId, message);
-    }*/
+    }
 
     private UserNotification createNotification(User sender, Integer receiverId, String message) throws IllegalArgumentException {
         if (sender.getRole() != Role.ADMIN) {

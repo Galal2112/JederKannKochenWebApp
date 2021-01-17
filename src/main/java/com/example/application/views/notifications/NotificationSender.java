@@ -33,7 +33,6 @@ public class NotificationSender extends VerticalLayout {
         add(notificationTextArea);
         add(send);
         send.addClickListener(e -> sendNotificationMessage());
-        // TODO: User logged in user
         var user = VaadinSession.getCurrent().getAttribute(User.class);
         adminUser = user;
     }
