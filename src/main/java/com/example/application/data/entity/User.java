@@ -147,4 +147,5 @@ public class User extends AbstractEntity {
     public void setProfileImage(byte[] profilePicture) {
         this.profileImage = profilePicture;
     }
+
 }

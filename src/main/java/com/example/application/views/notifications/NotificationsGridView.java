@@ -5,7 +5,6 @@ import com.example.application.data.entity.Role;
 import com.example.application.data.entity.User;
 import com.example.application.data.entity.UserNotification;
 import com.example.application.data.service.UserNotificationService;
-import com.example.application.views.main.MainView;
 import com.vaadin.flow.component.DetachEvent;
 import com.vaadin.flow.component.UIDetachedException;
 import com.vaadin.flow.component.grid.Grid;
@@ -18,19 +17,21 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.AfterNavigationEvent;
 import com.vaadin.flow.router.AfterNavigationObserver;
 import com.vaadin.flow.router.PageTitle;
-import com.vaadin.flow.router.Route;
+import com.vaadin.flow.server.VaadinSession;
 import com.vaadin.flow.shared.Registration;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-@Route(value = "notifications", layout = MainView.class)
+
 @PageTitle("My notifications")
 public class NotificationsGridView extends Div implements AfterNavigationObserver {
 
     private UserNotificationService notificationService;
+
     private Grid<UserNotification> grid = new Grid<>(UserNotification.class);
+
     private Registration registration;
 
     public NotificationsGridView(@Autowired UserNotificationService notificationService) {
@@ -75,7 +76,8 @@ public class NotificationsGridView extends Div implements AfterNavigationObserve
     }
 
     private void refreshList() {
-        List<UserNotification> dbNotifications = notificationService.getUserNotifications(1);
+        User user = VaadinSession.getCurrent().getAttribute(User.class);
+        List<UserNotification> dbNotifications = notificationService.getUserNotifications(user.getId());
         grid.setItems(dbNotifications);
         grid.getDataProvider().refreshAll();
     }

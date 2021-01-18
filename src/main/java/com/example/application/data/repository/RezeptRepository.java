@@ -4,6 +4,7 @@ import com.example.application.data.entity.Rezept;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -23,4 +24,8 @@ public interface RezeptRepository extends JpaRepository<Rezept, Integer> {
     @Modifying
     @Query("update Rezept r set r.rezeptName = :name, r.beschreibung = :inhalt where r.id = :rezeptId")
     void setRezeptInfoById(Integer rezeptId, String name, String inhalt);
+
+    @Query("select c from Rezept c " +
+            "where lower(c.rezeptName) like lower(concat('%', :searchTerm, '%')) ")
+    List<Rezept> search(@Param("searchTerm") String searchTerm);
 }
