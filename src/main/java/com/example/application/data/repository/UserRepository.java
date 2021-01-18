@@ -9,6 +9,9 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 public interface UserRepository extends JpaRepository<User, Integer> {
+
+    User getByUsername(String username);
+
     @Query("select u from User u where u.role=0")
     List<User> getUsersList();
 

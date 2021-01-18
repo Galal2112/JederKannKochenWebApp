@@ -9,6 +9,7 @@ import java.util.Date;
 
 @Entity
 public class UserNotification extends AbstractEntity {
+
     private String text;
     @ManyToOne(targetEntity=User.class)
     private User sender;

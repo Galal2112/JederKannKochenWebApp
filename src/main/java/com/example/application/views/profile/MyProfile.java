@@ -30,7 +30,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-@Route(value = "profile", layout = MainView.class)
+
 @PageTitle("Profile Information")
 @CssImport("./styles/views/myProfile/my-profile.css")
 public class MyProfile extends Div {

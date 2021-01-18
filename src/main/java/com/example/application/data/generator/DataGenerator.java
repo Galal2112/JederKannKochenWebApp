@@ -1,7 +1,6 @@
 package com.example.application.data.generator;
 
-import com.example.application.data.Repos.PersonRepository;
-import com.example.application.data.Repos.UserRepo;
+
 import com.example.application.data.entity.*;
 import com.example.application.data.repository.RezeptRepository;
 import com.example.application.data.repository.UserRepository;
@@ -26,7 +25,6 @@ public class DataGenerator {
     @Bean
     public CommandLineRunner loadData(UserRepository userRepository, RezeptRepository rezeptRepository,
                                       ZutatRepository zutatRepository, VideoRepository videoRepository,
-                                      PersonRepository personRepository, UserRepo userRepo,
                                       FoodProductRepository foodProductRepository) {
         return args -> {
             Logger logger = LoggerFactory.getLogger(getClass());
@@ -52,21 +50,45 @@ public class DataGenerator {
             zutatRepository.save(zutat2);
             rezept1.setZutaten(new ArrayList<>(Arrays.asList(zutat1, zutat2)));
 
-            // Person
+            userRepository.save(new User("user", "user12345", Role.USER));//Nur Zum Testen
+
+            userRepository.save(new User("admin", "admin000", Role.ADMIN));
+
+            String inhalt = "Zwiebel, Knolauch";
+
+            // Koshary
+            Zutat[] kosharyZutat = new Zutat[3];
+            kosharyZutat[0] = new Zutat(500, "Tomaten");
+            kosharyZutat[1] = new Zutat(1000, "Reis");
+            kosharyZutat[2] = new Zutat(300, "Pasta");
+            Rezept kosharyRezept = new Rezept("koshary", inhalt);
+            kosharyRezept.setCreator(adminUser);
+            rezeptRepository.save(kosharyRezept);
+            for (Zutat zutat : kosharyZutat) {
+                zutat.setRezept(kosharyRezept);
+                zutatRepository.save(zutat);
+            }
+            Video kosharyVideo = new Video("https://www.youtube.com/watch");
+            kosharyVideo.setRezept(kosharyRezept);
+            videoRepository.save(kosharyVideo);
+
+
+            Rezept pastaRezept = new Rezept("pasta", inhalt);
+            pastaRezept.setCreator(adminUser);
+            rezeptRepository.save(pastaRezept);
+            Zutat[] pastaZutat = new Zutat[2];
+            pastaZutat[0] = new Zutat(500, "Tomaten");
+            pastaZutat[1] = new Zutat(300, "Pasta");
+            for (Zutat zutat : pastaZutat) {
+                zutat.setRezept(pastaRezept);
+                zutatRepository.save(zutat);
+            }
+            Video pastaVideo = new Video("https://www.youtube.com/watch");
+            pastaVideo.setRezept(pastaRezept);
+            videoRepository.save(pastaVideo);
+
+            // food products
             int seed = 123;
-            ExampleDataGenerator<Person> personRepositoryGenerator = new ExampleDataGenerator<>(Person.class);
-            personRepositoryGenerator.setData(Person::setId, DataType.ID);
-            personRepositoryGenerator.setData(Person::setFirstName, DataType.FIRST_NAME);
-            personRepositoryGenerator.setData(Person::setLastName, DataType.LAST_NAME);
-            personRepositoryGenerator.setData(Person::setEmail, DataType.EMAIL);
-            personRepositoryGenerator.setData(Person::setPhone, DataType.PHONE_NUMBER);
-            personRepositoryGenerator.setData(Person::setDateOfBirth, DataType.DATE_OF_BIRTH);
-            personRepositoryGenerator.setData(Person::setOccupation, DataType.OCCUPATION);
-            personRepositoryGenerator.setData(Person::setImportant, DataType.BOOLEAN_10_90);
-            personRepository.saveAll(personRepositoryGenerator.create(100, seed));
-
-            userRepo.save(new User("user", "user12345", Role.USER));//Nur Zum Testen
-
             ExampleDataGenerator<FoodProduct> foodProductRepositoryGenerator = new ExampleDataGenerator<>(
                     FoodProduct.class);
             foodProductRepositoryGenerator.setData(FoodProduct::setId, DataType.ID);
@@ -74,7 +96,6 @@ public class DataGenerator {
             foodProductRepositoryGenerator.setData(FoodProduct::setName, DataType.FOOD_PRODUCT_NAME);
             foodProductRepositoryGenerator.setData(FoodProduct::setEanCode, DataType.FOOD_PRODUCT_EAN);
             foodProductRepository.saveAll(foodProductRepositoryGenerator.create(100, seed));
-
             logger.info("Generated demo data");
         };
     }
