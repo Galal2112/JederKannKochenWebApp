@@ -1,14 +1,8 @@
 package com.example.application.views.main;
 
-import com.example.application.views.about.AboutView;
-import com.example.application.views.cardlist.CardListView;
-import com.example.application.views.dashboard.DashboardView;
-import com.example.application.views.login.LoginView;
+import com.example.application.data.entity.User;
+import com.example.application.data.service.AuthService;
 import com.example.application.views.notifications.NotificationSender;
-import com.example.application.views.notifications.NotificationsGridView;
-import com.example.application.views.profile.MyProfile;
-import com.example.application.views.recipe.MyRecipe;
-import com.example.application.views.recipe.NewRecipe;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentUtil;
 import com.vaadin.flow.component.WebComponentExporter;
@@ -25,6 +19,7 @@ import com.vaadin.flow.component.tabs.TabVariant;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.webcomponent.WebComponent;
 import com.vaadin.flow.router.RouterLink;
+import com.vaadin.flow.server.VaadinSession;
 
 import java.util.Optional;
 
@@ -50,8 +45,10 @@ public class MainView extends AppLayout {
     }
 
     private final Tabs menu;
+    private AuthService authService;
 
-    public MainView() {
+    public MainView(AuthService authService) {
+        this.authService = authService;
         HorizontalLayout header = createHeader();
         menu = createMenuTabs();
         addToNavbar(createTopBar(header, menu));
@@ -85,21 +82,18 @@ public class MainView extends AppLayout {
         return header;
     }
 
-    private static Tabs createMenuTabs() {
+    private Tabs createMenuTabs() {
         final Tabs tabs = new Tabs();
         tabs.getStyle().set("max-width", "100%");
         tabs.add(getAvailableTabs());
         return tabs;
     }
 
-    private static Tab[] getAvailableTabs() {
-        return new Tab[]{createTab("Dashboard", DashboardView.class),
-                createTab("Profile", MyProfile.class),
-                createTab("Home", CardListView.class),
-                createTab("Create New Recipe", NewRecipe.class),
-                createTab("Recipes CRUD", MyRecipe.class),
-                createTab("Notifications", NotificationsGridView.class),
-                createTab("Login", LoginView.class), createTab("About", AboutView.class)};
+    private Tab[] getAvailableTabs() {
+        User user = VaadinSession.getCurrent().getAttribute(User.class);
+        return authService.getAuthoRoutes(user.getRole()).stream()
+                .map(r -> createTab(r.name(), r.view()))
+                .toArray(Tab[]::new);
     }
 
     private static Tab createTab(String text, Class<? extends Component> navigationTarget) {

@@ -11,9 +11,10 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.server.VaadinSession;
 import org.springframework.beans.factory.annotation.Autowired;
 
-@Route(value = "admin-notifications", layout = MainView.class)
+
 @PageTitle("Admin Notifications")
 public class NotificationSender extends VerticalLayout {
 
@@ -32,8 +33,8 @@ public class NotificationSender extends VerticalLayout {
         add(notificationTextArea);
         add(send);
         send.addClickListener(e -> sendNotificationMessage());
-        // TODO: User logged in user
-        adminUser = userService.login("test@google.com", "123456");
+        var user = VaadinSession.getCurrent().getAttribute(User.class);
+        adminUser = user;
     }
 
     private void sendNotificationMessage() {
