@@ -50,4 +50,15 @@ public class RezeptService extends CrudService<Rezept, Integer> {
     public void updateRezept(Integer id, String name, String inhalt) {
         repository.setRezeptInfoById(id, name, inhalt);
     }
+
+    public List<Rezept> findAll() {
+        return repository.findAll();
+    }
+    public List<Rezept> findAll(String eingabe) {
+        if (eingabe == null || eingabe.isEmpty()) {
+            return repository.findAll();
+        } else {
+            return repository.search(eingabe);
+        }
+    }
 }

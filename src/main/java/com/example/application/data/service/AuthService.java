@@ -4,6 +4,7 @@ package com.example.application.data.service;
 import com.example.application.data.entity.Role;
 import com.example.application.data.entity.User;
 import com.example.application.data.repository.UserRepository;
+import com.example.application.views.RezeptView.RezeptView;
 import com.example.application.views.logout.LogoutView;
 import com.example.application.views.main.MainView;
 import com.example.application.views.notifications.NotificationSender;
@@ -65,10 +66,12 @@ public class AuthService {
         routes.add(new AuthRoute("CreateNewRecipe", "Create New Recipe", NewRecipe.class));
         routes.add(new AuthRoute("notifications", "My notifications", NotificationsGridView.class));
 
-        if (role.equals(Role.ADMIN)) {
+        if (role.equals(Role.USER)) {
+            routes.add(new AuthRoute("rezept", "Rezept", RezeptView.class));
+        } else if (role.equals(Role.ADMIN)) {
             routes.add(new AuthRoute("admin-notifications", "Send System notification", NotificationSender.class));
-
         }
+
         routes.add(new AuthRoute("logout", "Logout", LogoutView.class));
 
         return routes;

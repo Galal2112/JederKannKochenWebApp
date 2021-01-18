@@ -11,8 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
-import org.vaadin.artur.exampledata.DataType;
-import org.vaadin.artur.exampledata.ExampleDataGenerator;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -49,11 +47,42 @@ public class DataGenerator {
             zutatRepository.save(zutat2);
             rezept1.setZutaten(new ArrayList<>(Arrays.asList(zutat1, zutat2)));
 
-
-
             userRepository.save(new User("user", "user12345", Role.USER));//Nur Zum Testen
 
             userRepository.save(new User("admin", "admin000", Role.ADMIN));
+
+            String inhalt = "Zwiebel, Knolauch";
+
+            // Koshary
+            Zutat[] kosharyZutat = new Zutat[3];
+            kosharyZutat[0] = new Zutat(500, "Tomaten");
+            kosharyZutat[1] = new Zutat(1000, "Reis");
+            kosharyZutat[2] = new Zutat(300, "Pasta");
+            Rezept kosharyRezept = new Rezept("koshary", inhalt);
+            kosharyRezept.setCreator(adminUser);
+            rezeptRepository.save(kosharyRezept);
+            for (Zutat zutat : kosharyZutat) {
+                zutat.setRezept(kosharyRezept);
+                zutatRepository.save(zutat);
+            }
+            Video kosharyVideo = new Video("https://www.youtube.com/watch");
+            kosharyVideo.setRezept(kosharyRezept);
+            videoRepository.save(kosharyVideo);
+
+
+            Rezept pastaRezept = new Rezept("pasta", inhalt);
+            pastaRezept.setCreator(adminUser);
+            rezeptRepository.save(pastaRezept);
+            Zutat[] pastaZutat = new Zutat[2];
+            pastaZutat[0] = new Zutat(500, "Tomaten");
+            pastaZutat[1] = new Zutat(300, "Pasta");
+            for (Zutat zutat : pastaZutat) {
+                zutat.setRezept(pastaRezept);
+                zutatRepository.save(zutat);
+            }
+            Video pastaVideo = new Video("https://www.youtube.com/watch");
+            pastaVideo.setRezept(pastaRezept);
+            videoRepository.save(pastaVideo);
             logger.info("Generated demo data");
         };
     }
