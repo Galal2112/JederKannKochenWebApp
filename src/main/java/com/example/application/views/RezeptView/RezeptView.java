@@ -65,23 +65,6 @@ public class RezeptView extends VerticalLayout {
 
         }).setHeader("Inhalte");
 
-       /*
-        grid.addColumn(rezept -> {
-
-            List<Zutat> zutats = rezept.getZutaten();
-
-            String[] zutatNamen = new String[zutats.size()];
-            for (int i = 0; i < zutats.size(); i++) {
-                zutatNamen[i] = zutats.get(i).getItem();
-            }
-            String str = Arrays.toString(zutatNamen);
-
-            return zutats == null ? " - " : str;
-
-        }).setHeader("Zutaten");
-        */
-
-
         grid.getColumns().forEach(col -> col.setAutoWidth(true));//das alle Spalten genaug Platz fuer Ihre Inhalte haben
 
     }
