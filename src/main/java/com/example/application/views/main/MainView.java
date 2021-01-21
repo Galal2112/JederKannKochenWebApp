@@ -7,7 +7,6 @@ import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentUtil;
 import com.vaadin.flow.component.WebComponentExporter;
 import com.vaadin.flow.component.applayout.AppLayout;
-import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.component.html.H1;
@@ -15,12 +14,10 @@ import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.page.Push;
 import com.vaadin.flow.component.tabs.Tab;
+import com.vaadin.flow.component.tabs.TabVariant;
 import com.vaadin.flow.component.tabs.Tabs;
-import com.vaadin.flow.component.tabs.TabsVariant;
 import com.vaadin.flow.component.webcomponent.WebComponent;
-import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.server.VaadinSession;
 
@@ -29,12 +26,11 @@ import java.util.Optional;
 /**
  * The main view is a top-level placeholder for other views.
  */
-@Push
+@CssImport(value = "./styles/views/main/main-view.css", themeFor = "vaadin-app-layout")
 @CssImport("./styles/views/main/main-view.css")
 @JsModule("./styles/shared-styles.js")
 public class MainView extends AppLayout {
 
-    @Push
     public static class Exporter extends WebComponentExporter<NotificationSender> {
 
         public Exporter() {
@@ -49,65 +45,60 @@ public class MainView extends AppLayout {
     }
 
     private final Tabs menu;
-    private H1 viewTitle;
     private AuthService authService;
 
     public MainView(AuthService authService) {
         this.authService = authService;
-        setPrimarySection(Section.DRAWER);
-        addToNavbar(true, createHeaderContent());
-        menu = createMenu();
-        addToDrawer(createDrawerContent(menu));
+        HorizontalLayout header = createHeader();
+        menu = createMenuTabs();
+        addToNavbar(createTopBar(header, menu));
     }
 
-    private Component createHeaderContent() {
-        HorizontalLayout layout = new HorizontalLayout();
-        layout.setId("header");
-        layout.getThemeList().set("dark", true);
+    private VerticalLayout createTopBar(HorizontalLayout header, Tabs menu) {
+        VerticalLayout layout = new VerticalLayout();
+        layout.getThemeList().add("dark");
         layout.setWidthFull();
         layout.setSpacing(false);
-        layout.setAlignItems(FlexComponent.Alignment.CENTER);
-        layout.add(new DrawerToggle());
-        viewTitle = new H1();
-        layout.add(viewTitle);
-        layout.add(new Image("images/user.svg", "Avatar"));
-        return layout;
-    }
-
-    private Component createDrawerContent(Tabs menu) {
-        VerticalLayout layout = new VerticalLayout();
-        layout.setSizeFull();
         layout.setPadding(false);
-        layout.setSpacing(false);
-        layout.getThemeList().set("spacing-s", true);
-        layout.setAlignItems(FlexComponent.Alignment.STRETCH);
-        HorizontalLayout logoLayout = new HorizontalLayout();
-        logoLayout.setId("logo");
-        logoLayout.setAlignItems(FlexComponent.Alignment.CENTER);
-        logoLayout.add(new Image("images/logo.png", "My Project logo"));
-        logoLayout.add(new H1("My Project"));
-        layout.add(logoLayout, menu);
+        layout.setAlignItems(FlexComponent.Alignment.CENTER);
+        layout.add(header, menu);
         return layout;
     }
 
-    private Tabs createMenu() {
+    private HorizontalLayout createHeader() {
+        HorizontalLayout header = new HorizontalLayout();
+        header.setPadding(false);
+        header.setSpacing(false);
+        header.setWidthFull();
+        header.setAlignItems(FlexComponent.Alignment.CENTER);
+        header.setId("header");
+        Image logo = new Image("images/logo.png", "Jeder Kann Kochen logo");
+        logo.setId("logo");
+        header.add(logo);
+        Image avatar = new Image("images/user.svg", "Avatar");
+        avatar.setId("avatar");
+        header.add(new H1("Jeder Kann Kochen"));
+        header.add(avatar);
+        return header;
+    }
+
+    private Tabs createMenuTabs() {
         final Tabs tabs = new Tabs();
-        tabs.setOrientation(Tabs.Orientation.VERTICAL);
-        tabs.addThemeVariants(TabsVariant.LUMO_MINIMAL);
-        tabs.setId("tabs");
-        tabs.add(createMenuItems());
+        tabs.getStyle().set("max-width", "100%");
+        tabs.add(getAvailableTabs());
         return tabs;
     }
 
-    private Component[] createMenuItems() {
-        var user = VaadinSession.getCurrent().getAttribute(User.class);
+    private Tab[] getAvailableTabs() {
+        User user = VaadinSession.getCurrent().getAttribute(User.class);
         return authService.getAuthoRoutes(user.getRole()).stream()
                 .map(r -> createTab(r.name(), r.view()))
-                .toArray(Component[]::new);
+                .toArray(Tab[]::new);
     }
 
     private static Tab createTab(String text, Class<? extends Component> navigationTarget) {
         final Tab tab = new Tab();
+        tab.addThemeVariants(TabVariant.LUMO_ICON_ON_TOP);
         tab.add(new RouterLink(text, navigationTarget));
         ComponentUtil.setData(tab, Class.class, navigationTarget);
         return tab;
@@ -117,15 +108,10 @@ public class MainView extends AppLayout {
     protected void afterNavigation() {
         super.afterNavigation();
         getTabForComponent(getContent()).ifPresent(menu::setSelectedTab);
-        viewTitle.setText(getCurrentPageTitle());
     }
 
     private Optional<Tab> getTabForComponent(Component component) {
         return menu.getChildren().filter(tab -> ComponentUtil.getData(tab, Class.class).equals(component.getClass()))
                 .findFirst().map(Tab.class::cast);
-    }
-
-    private String getCurrentPageTitle() {
-        return getContent().getClass().getAnnotation(PageTitle.class).value();
     }
 }
