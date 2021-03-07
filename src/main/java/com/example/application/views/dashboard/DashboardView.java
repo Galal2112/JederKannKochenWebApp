@@ -24,7 +24,6 @@ import java.util.List;
 @PageTitle("Dashboard")
 @CssImport(value = "./styles/views/dashboard/dashboard-view.css", include = "lumo-badge")
 @JsModule("@vaadin/vaadin-lumo-styles/badge.js")
-@RouteAlias(value = "", layout = MainView.class)
 public class DashboardView extends Div implements AfterNavigationObserver {
 
     private Grid<HealthGridItem> grid = new Grid<>();
