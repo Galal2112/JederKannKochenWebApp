@@ -13,6 +13,7 @@ import com.example.application.views.notifications.NotificationsGridView;
 import com.example.application.views.profile.MyProfile;
 import com.example.application.views.recipe.MyRecipe;
 import com.example.application.views.recipe.NewRecipe;
+import com.example.application.views.sendmail.SendMailView;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.router.RouteConfiguration;
 import com.vaadin.flow.server.VaadinSession;
@@ -68,6 +69,7 @@ public class AuthService {
         
         if (role.equals(Role.USER)) {
             routes.add(new AuthRoute("rezept", "Rezept", RezeptView.class));
+            routes.add(new AuthRoute("SendAnEmail", "Send an E-mail", SendMailView.class));
         } else if (role.equals(Role.ADMIN)) {
             routes.add(new AuthRoute("admin-notifications", "Send System notification", NotificationSender.class));
         }
