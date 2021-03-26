@@ -12,11 +12,17 @@ import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
 
+
 @Route("register")
 @CssImport("./styles/views/login.css")
 public class RegisterView extends Composite {
 
     private final AuthService authService;
+    TextField user = new TextField("Username");
+    H2 h2 = new H2("Registrieren");
+    PasswordField pass = new PasswordField("Password");
+    PasswordField pass2 = new PasswordField(" Confirm Password");
+
 
     public RegisterView(AuthService authService) {
         this.authService = authService;
@@ -25,10 +31,6 @@ public class RegisterView extends Composite {
     @Override
     protected Component initContent() {
 
-        TextField user = new TextField("Username");
-        H2 h2 = new H2("Registrieren");
-        PasswordField pass = new PasswordField("Password");
-        PasswordField pass2 = new PasswordField(" Confirm Password");
         return new VerticalLayout(
                 h2,
                 user,

@@ -30,7 +30,6 @@ public class NewRecipe extends Div {
         add(rezeptName, inhalt, saveBtn, valueBlock);
         binder.bindInstanceFields(this);
         saveBtn.addClickListener(e -> {
-            // TODO: get user from session
             var user = VaadinSession.getCurrent().getAttribute(User.class);
          //   User creator = userService.login("test@google.com", "123456");
             rezeptService.createRezept(user, rezeptName.getValue(), inhalt.getHtmlValue());
