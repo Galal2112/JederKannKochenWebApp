@@ -54,6 +54,7 @@ public class RezeptService extends CrudService<Rezept, Integer> {
     public List<Rezept> findAll() {
         return repository.findAll();
     }
+
     public List<Rezept> findAll(String eingabe) {
         if (eingabe == null || eingabe.isEmpty()) {
             return repository.findAll();

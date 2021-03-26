@@ -1,6 +1,5 @@
 package com.example.application.views.RezeptView;
 
-
 import com.example.application.data.entity.Rezept;
 import com.example.application.data.service.RezeptService;
 import com.vaadin.flow.component.grid.Grid;
@@ -10,7 +9,6 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import org.springframework.beans.factory.annotation.Autowired;
-
 
 @PageTitle("Verfügbare Rezepte")
 

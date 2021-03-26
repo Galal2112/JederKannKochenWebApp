@@ -1,6 +1,5 @@
 package com.example.application.data.service;
 
-
 import com.example.application.data.entity.Role;
 import com.example.application.data.entity.User;
 import com.example.application.data.repository.UserRepository;
@@ -24,11 +23,12 @@ import javax.security.auth.message.AuthException;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @Service
 public class AuthService {
 
     private final UserRepository userRepo;
+
+    private List<AuthRoute> routes;
 
     public AuthService(UserRepository userRepo) {
         this.userRepo = userRepo;
@@ -46,6 +46,7 @@ public class AuthService {
         }
 
     }
+
     public record AuthRoute(String route, String name, Class<? extends Component> view) {
 
     }
@@ -66,9 +67,9 @@ public class AuthService {
         routes.add(new AuthRoute("MyReceipt", "Recipes CRUD", MyRecipe.class));
         routes.add(new AuthRoute("CreateNewRecipe", "Create New Recipe", NewRecipe.class));
         routes.add(new AuthRoute("notifications", "My notifications", NotificationsGridView.class));
-        
+        routes.add(new AuthRoute("rezept", "Rezept", RezeptView.class));
         if (role.equals(Role.USER)) {
-            routes.add(new AuthRoute("rezept", "Rezept", RezeptView.class));
+
             routes.add(new AuthRoute("SendAnEmail", "Send an E-mail", SendMailView.class));
         } else if (role.equals(Role.ADMIN)) {
             routes.add(new AuthRoute("admin-notifications", "Send System notification", NotificationSender.class));
@@ -76,6 +77,7 @@ public class AuthService {
 
         routes.add(new AuthRoute("logout", "Logout", LogoutView.class));
 
+        this.routes = routes;
         return routes;
     }
 
@@ -86,5 +88,9 @@ public class AuthService {
 
     public UserRepository getUserRepo() {
         return userRepo;
+    }
+
+    public List<AuthRoute> getRoutes() {
+        return routes;
     }
 }

@@ -24,7 +24,7 @@ public class User extends AbstractEntity {
     private Role role;
     private Gender gender;
     @OneToMany(
-            targetEntity= Rezept.class,
+            targetEntity = Rezept.class,
             mappedBy = "creator",
             cascade = CascadeType.ALL,
             orphanRemoval = true
@@ -34,7 +34,8 @@ public class User extends AbstractEntity {
     @Basic(fetch = FetchType.LAZY)
     private byte[] profileImage;
 
-    public User() {}
+    public User() {
+    }
 
     public User(String username, String passwort, Role role) {
         this.username = username;
@@ -121,6 +122,7 @@ public class User extends AbstractEntity {
     }
 
     public void setPassword(String password) {
+
         this.password = password;
     }
 
