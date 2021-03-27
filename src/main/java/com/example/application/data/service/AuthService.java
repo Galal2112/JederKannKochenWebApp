@@ -5,6 +5,7 @@ import com.example.application.data.entity.User;
 import com.example.application.data.repository.UserRepository;
 import com.example.application.views.RezeptView.RezeptView;
 import com.example.application.views.dashboard.DashboardView;
+import com.example.application.views.jederkannkochen.JederKannKochenView;
 import com.example.application.views.logout.LogoutView;
 import com.example.application.views.main.MainView;
 import com.example.application.views.notifications.NotificationSender;
@@ -80,6 +81,7 @@ public class AuthService {
 
         ArrayList<AuthRoute> routes = new ArrayList<>();
         routes.add(new AuthRoute("dashboard", "Dashboard", DashboardView.class));
+        routes.add(new AuthRoute("upload", "Upload", JederKannKochenView.class));
         routes.add(new AuthRoute("home", "My profile", MyProfile.class));
         routes.add(new AuthRoute("MyReceipt", "Recipes CRUD", MyRecipe.class));
         routes.add(new AuthRoute("CreateNewRecipe", "Create New Recipe", NewRecipe.class));
