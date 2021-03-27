@@ -22,6 +22,7 @@ import javax.naming.AuthenticationException;
 import javax.security.auth.message.AuthException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class AuthService {
@@ -56,6 +57,14 @@ public class AuthService {
             this.route = route;
             this.name = name;
             this.view = view;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            AuthRoute authRoute = (AuthRoute) o;
+            return Objects.equals(route, authRoute.route) && Objects.equals(name, authRoute.name);
         }
     }
 
