@@ -2,10 +2,8 @@ package com.example.application.views.main;
 
 import com.example.application.data.entity.User;
 import com.example.application.data.service.AuthService;
-import com.example.application.views.notifications.NotificationSender;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentUtil;
-import com.vaadin.flow.component.WebComponentExporter;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.dependency.JsModule;
@@ -17,7 +15,6 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.TabVariant;
 import com.vaadin.flow.component.tabs.Tabs;
-import com.vaadin.flow.component.webcomponent.WebComponent;
 import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.server.VaadinSession;
 
@@ -30,19 +27,6 @@ import java.util.Optional;
 @CssImport("./styles/views/main/main-view.css")
 @JsModule("./styles/shared-styles.js")
 public class MainView extends AppLayout {
-
-    public static class Exporter extends WebComponentExporter<NotificationSender> {
-
-        public Exporter() {
-            super("notifications-list");
-        }
-
-        @Override
-        public void configureInstance(WebComponent<NotificationSender> webComponent, NotificationSender component) {
-
-        }
-
-    }
 
     private final Tabs menu;
     private AuthService authService;
@@ -92,7 +76,7 @@ public class MainView extends AppLayout {
     private Tab[] getAvailableTabs() {
         User user = VaadinSession.getCurrent().getAttribute(User.class);
         return authService.getAuthoRoutes(user.getRole()).stream()
-                .map(r -> createTab(r.name(), r.view()))
+                .map(r -> createTab(r.name, r.view))
                 .toArray(Tab[]::new);
     }
 

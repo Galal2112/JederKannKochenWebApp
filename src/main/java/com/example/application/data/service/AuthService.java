@@ -47,8 +47,16 @@ public class AuthService {
 
     }
 
-    public record AuthRoute(String route, String name, Class<? extends Component> view) {
+    public static class AuthRoute {
+        public String route;
+        public String name;
+        public Class<? extends Component> view;
 
+        public AuthRoute(String route, String name, Class<? extends Component> view) {
+            this.route = route;
+            this.name = name;
+            this.view = view;
+        }
     }
 
     private void createRoutes(Role role) {
@@ -61,7 +69,7 @@ public class AuthService {
 
     public List<AuthRoute> getAuthoRoutes(Role role) {
 
-        var routes = new ArrayList<AuthRoute>();
+        ArrayList<AuthRoute> routes = new ArrayList<>();
         routes.add(new AuthRoute("dashboard", "Dashboard", DashboardView.class));
         routes.add(new AuthRoute("home", "My profile", MyProfile.class));
         routes.add(new AuthRoute("MyReceipt", "Recipes CRUD", MyRecipe.class));

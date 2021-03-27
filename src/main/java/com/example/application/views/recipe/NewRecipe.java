@@ -4,7 +4,6 @@ import com.example.application.data.entity.Rezept;
 import com.example.application.data.entity.User;
 import com.example.application.data.service.RezeptService;
 import com.example.application.data.service.UserService;
-import com.example.application.views.main.MainView;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.notification.Notification;
@@ -12,7 +11,6 @@ import com.vaadin.flow.component.richtexteditor.RichTextEditor;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.router.PageTitle;
-import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.VaadinSession;
 
 
@@ -30,7 +28,7 @@ public class NewRecipe extends Div {
         add(rezeptName, inhalt, saveBtn, valueBlock);
         binder.bindInstanceFields(this);
         saveBtn.addClickListener(e -> {
-            var user = VaadinSession.getCurrent().getAttribute(User.class);
+            User user = VaadinSession.getCurrent().getAttribute(User.class);
          //   User creator = userService.login("test@google.com", "123456");
             rezeptService.createRezept(user, rezeptName.getValue(), inhalt.getHtmlValue());
             Notification.show("Recipe created.");
