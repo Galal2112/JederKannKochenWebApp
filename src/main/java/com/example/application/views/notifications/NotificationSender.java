@@ -4,13 +4,11 @@ import com.example.application.data.broadcaster.Broadcaster;
 import com.example.application.data.entity.User;
 import com.example.application.data.service.UserNotificationService;
 import com.example.application.data.service.UserService;
-import com.example.application.views.main.MainView;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.router.PageTitle;
-import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.VaadinSession;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -33,7 +31,7 @@ public class NotificationSender extends VerticalLayout {
         add(notificationTextArea);
         add(send);
         send.addClickListener(e -> sendNotificationMessage());
-        var user = VaadinSession.getCurrent().getAttribute(User.class);
+        User user = VaadinSession.getCurrent().getAttribute(User.class);
         adminUser = user;
     }
 

@@ -68,7 +68,7 @@ public class MyRecipe extends Div {
         public RezeptDataProvider(RezeptService service) {
             this.service = service;
             //this.DATABASE = service.getAllRezepte();
-            var user = VaadinSession.getCurrent().getAttribute(User.class);
+            User user = VaadinSession.getCurrent().getAttribute(User.class);
            this.DATABASE= (List<Rezept>) service.getUserRezepte(user.getId());
         }
 
