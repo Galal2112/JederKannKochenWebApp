@@ -67,9 +67,8 @@ public class MyRecipe extends Div {
 
         public RezeptDataProvider(RezeptService service) {
             this.service = service;
-            //this.DATABASE = service.getAllRezepte();
             User user = VaadinSession.getCurrent().getAttribute(User.class);
-           this.DATABASE= (List<Rezept>) service.getUserRezepte(user.getId());
+           this.DATABASE= service.getUserRezepte(user.getId());
         }
 
         @Override
@@ -102,11 +101,10 @@ public class MyRecipe extends Div {
         }
 
         private static Predicate<Rezept> predicate(CrudFilter filter) {
-            // For RDBMS just generate a WHERE clause
             return filter.getConstraints().entrySet().stream()
-                    .map(constraint -> (Predicate<Rezept>) person -> {
+                    .map(constraint -> (Predicate<Rezept>) rezept -> {
                         try {
-                            Object value = valueOf(constraint.getKey(), person);
+                            Object value = valueOf(constraint.getKey(), rezept);
                             return value != null && value.toString().toLowerCase()
                                     .contains(constraint.getValue().toLowerCase());
                         } catch (Exception e) {
@@ -124,8 +122,8 @@ public class MyRecipe extends Div {
                     .map(sortClause -> {
                         try {
                             Comparator<Rezept> comparator
-                                    = Comparator.comparing(person ->
-                                    (Comparable) valueOf(sortClause.getKey(), person));
+                                    = Comparator.comparing(rezept ->
+                                    (Comparable) valueOf(sortClause.getKey(), rezept));
 
                             if (sortClause.getValue() == SortDirection.DESCENDING) {
                                 comparator = comparator.reversed();
@@ -140,11 +138,11 @@ public class MyRecipe extends Div {
                     .orElse((o1, o2) -> 0);
         }
 
-        private static Object valueOf(String fieldName, Rezept person) {
+        private static Object valueOf(String fieldName, Rezept rezept) {
             try {
                 Field field = Rezept.class.getDeclaredField(fieldName);
                 field.setAccessible(true);
-                return field.get(person);
+                return field.get(rezept);
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
             }

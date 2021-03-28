@@ -3,7 +3,6 @@ package com.example.application.views.notifications;
 import com.example.application.data.broadcaster.Broadcaster;
 import com.example.application.data.entity.User;
 import com.example.application.data.service.UserNotificationService;
-import com.example.application.data.service.UserService;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -23,7 +22,7 @@ public class NotificationSender extends VerticalLayout {
     private Button send = new Button("Send");
     private User adminUser;
 
-    public NotificationSender(@Autowired UserNotificationService notificationService, @Autowired UserService userService) {
+    public NotificationSender(@Autowired UserNotificationService notificationService) {
         this.notificationService = notificationService;
         setSizeFull();
         notificationTextArea.setHeight("30%");

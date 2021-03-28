@@ -2,7 +2,6 @@ package com.example.application.views.profile;
 
 import com.example.application.data.entity.User;
 import com.example.application.data.service.UserService;
-import com.example.application.views.main.MainView;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -22,8 +21,8 @@ import com.vaadin.flow.component.upload.Upload;
 import com.vaadin.flow.component.upload.receivers.MemoryBuffer;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.router.PageTitle;
-import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.StreamResource;
+import com.vaadin.flow.server.VaadinSession;
 import org.apache.commons.io.IOUtils;
 
 import java.io.ByteArrayInputStream;
@@ -44,6 +43,7 @@ public class MyProfile extends Div {
     private Button cancel = new Button("Cancel");
     private Button save = new Button("Save");
 
+    //show data from User.class
     private Binder<User> binder = new Binder(User.class);
 
     private UserService userService;
@@ -72,6 +72,7 @@ public class MyProfile extends Div {
         bindProfile();
         binder.bindInstanceFields(this);
 
+        //refresh data from database
         cancel.addClickListener(e -> bindProfile());
         save.addClickListener(e -> {
             userService.update(binder.getBean());
@@ -93,12 +94,12 @@ public class MyProfile extends Div {
 
 
     private void bindProfile() {
-        binder.setBean(userService.login("test@google.com", "123456"));
+        User user = VaadinSession.getCurrent().getAttribute(User.class);
+        binder.setBean(user);
         if (binder.getBean().getProfileImage() != null) {
             profileImage.getElement().setAttribute("src", new StreamResource(
                     "profileImage", () -> new ByteArrayInputStream(binder.getBean().getProfileImage())));
         }
-
     }
 
     private Component createTitle() {

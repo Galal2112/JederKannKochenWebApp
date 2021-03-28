@@ -45,5 +45,4 @@ public class UserNotificationService extends CrudService<UserNotification, Integ
         repository.save(userNotification);
         return userNotification;
     }
-
 }
