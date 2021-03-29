@@ -20,8 +20,8 @@ public class RegisterView extends Composite {
     private final AuthService authService;
     TextField user = new TextField("Username");
     H2 h2 = new H2("Registrieren");
-    PasswordField pass = new PasswordField("Password");
-    PasswordField pass2 = new PasswordField(" Confirm Password");
+    PasswordField password = new PasswordField("Password");
+    PasswordField password_confirmation = new PasswordField(" Confirm Password");
 
 
     public RegisterView(AuthService authService) {
@@ -34,9 +34,9 @@ public class RegisterView extends Composite {
         return new VerticalLayout(
                 h2,
                 user,
-                pass,
-                pass2,
-                new Button("Senden", event -> register(user.getValue(), pass.getValue(), pass2.getValue()))
+                password,
+                password_confirmation,
+                new Button("Senden", event -> register(user.getValue(), password.getValue(), password_confirmation.getValue()))
         );
     }
 

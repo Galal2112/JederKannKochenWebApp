@@ -18,6 +18,7 @@ public class SendMailView extends VerticalLayout {
     TextField subjectTextField = new TextField("Subject:");
     private TextArea notificationTextArea = new TextArea("Your Message:");
     private Button send = new Button("Send");
+    CommonsEmailService commonsEmailService = new CommonsEmailService();
 
     public SendMailView() {
         setId("send-mail-view");
@@ -32,15 +33,15 @@ public class SendMailView extends VerticalLayout {
         send.addClickListener(e -> sendMail());
     }
 
-    private void sendMail() {
+    public void sendMail() {
         try {
 
-            String to = "aamadel100@gmail.com";
-            CommonsEmailService.send(fromTextField.getValue(), Arrays.asList(to),
+            String to = String.valueOf(System.getenv("EMAIL"));
+            commonsEmailService.send(fromTextField.getValue(), Arrays.asList(to),
                     subjectTextField.getValue(),
                     "from \n" + fromTextField.getValue() + "\n" + notificationTextArea.getValue());
 
-            CommonsEmailService.send(fromTextField.getValue(), Arrays.asList(fromTextField.getValue()),
+            commonsEmailService.send(fromTextField.getValue(), Arrays.asList(fromTextField.getValue()),
                     "Danke für Ihre E-mail", "Vielen Dank fuer Ihre E-mail , wir kontaktieren Sie so schnell wie moeglich \n \n LG\n Jeder kann kochen Team ");
 
         } catch (IOException | EmailException e) {
@@ -48,4 +49,11 @@ public class SendMailView extends VerticalLayout {
         }
     }
 
+    public void setFromTextField(TextField fromTextField) {
+        this.fromTextField = fromTextField;
+    }
+
+    public CommonsEmailService getCommonsEmailService() {
+        return commonsEmailService;
+    }
 }

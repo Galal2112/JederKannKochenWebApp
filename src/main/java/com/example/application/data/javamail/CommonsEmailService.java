@@ -3,27 +3,24 @@ package com.example.application.data.javamail;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.HtmlEmail;
 
-import javax.mail.util.ByteArrayDataSource;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
 
 public class CommonsEmailService {
 
-    public static void send(String from, Collection<String> recipients, String subject, String text)
+    boolean erledigt = false;
+    int gesendet = 0;
+    String port;
+
+    public void send(String from, Collection<String> recipients, String subject, String text)
             throws IOException, EmailException {
         send(from, recipients, subject, text, null, null, null);
     }
 
-    public static void send(String from, String recipient, String subject, String text, InputStream attachment,
-                            String fileName, String mimeType)
-            throws IOException, EmailException {
-        send(from, Arrays.asList(recipient), subject, text, Arrays.asList(attachment), Arrays.asList(fileName),
-                Arrays.asList(mimeType));
-    }
 
-    public static void send(String from, Collection<String> recipients, String subject, String text,
-                            List<InputStream> attachments, List<String> fileNames, List<String> mimeTypes)
+    public void send(String from, Collection<String> recipients, String subject, String text,
+                     List<InputStream> attachments, List<String> fileNames, List<String> mimeTypes)
             throws EmailException, IOException {
 
         Objects.requireNonNull(from);
@@ -33,9 +30,10 @@ public class CommonsEmailService {
         properties.load(CommonsEmailService.class.getResourceAsStream("/mail.properties"));
         String host = properties.getProperty("mail.smtp.host");
         String port = properties.getProperty("mail.smtp.port");
+        this.port = port;
         String ssl = properties.getProperty("mail.smtp.ssl.enable");
-        String username = properties.getProperty("mail.smtp.username");
-        String password = properties.getProperty("mail.smtp.password");
+        String username = String.valueOf(System.getenv("EMAILFROM"));
+        String password = String.valueOf(System.getenv("PASSFROM"));
 
         HtmlEmail email = new HtmlEmail();
 
@@ -49,16 +47,21 @@ public class CommonsEmailService {
         email.setSubject(subject);
         email.setHtmlMsg(text);
 
-        if (attachments != null) {
-            for (int i = 0; i < attachments.size(); i++) {
-
-                ByteArrayDataSource dataSource = new ByteArrayDataSource(attachments.get(i), mimeTypes.get(i));
-
-                email.attach(dataSource, fileNames.get(i), "attachment");
-            }
-        }
-
         email.send();
+        gesendet++;
+        erledigt = true;
+    }
+
+    public boolean isErledigt() {
+        return erledigt;
+    }
+
+    public String getPort() {
+        return port;
+    }
+
+    public int getGesendet() {
+        return gesendet;
     }
 
 }

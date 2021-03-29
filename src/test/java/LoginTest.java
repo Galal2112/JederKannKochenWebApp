@@ -88,7 +88,7 @@ public class LoginTest {
 
         try {
             authService.authen("amro", "123456");
-            assertTrue(authService.getRoutes().size() == 8);
+            assertTrue(authService.getRoutes().size() == 9);
         } catch (AuthenticationException e) {
             e.printStackTrace();
         } catch (AuthException e) {
@@ -115,10 +115,8 @@ public class LoginTest {
 
         try {
             authService.authen("amro", "123456");
-
-            AuthService.AuthRoute email = new AuthService.AuthRoute("SendAnEmail", "Send an E-mail", SendMailView.class);
-
-            assertTrue(authService.getRoutes().contains(email));
+            AuthService.AuthRoute adminNotificatioin = new AuthService.AuthRoute("admin-notifications", "Send System notification", NotificationSender.class);
+            assertFalse(authService.getRoutes().contains(adminNotificatioin));
         } catch (AuthenticationException e) {
             e.printStackTrace();
         } catch (AuthException e) {
@@ -133,10 +131,8 @@ public class LoginTest {
 
         try {
             authService.authen("admin", "123456");
-
-            AuthService.AuthRoute adminNotificatioin = new AuthService.AuthRoute("admin-notifications", "Send System notification", NotificationSender.class);
-
-            assertTrue(authService.getRoutes().contains(adminNotificatioin));
+            AuthService.AuthRoute email = new AuthService.AuthRoute("SendAnEmail", "Send an E-mail", SendMailView.class);
+            assertFalse(authService.getRoutes().contains(email));
         } catch (AuthenticationException e) {
             e.printStackTrace();
         } catch (AuthException e) {
