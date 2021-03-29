@@ -6,7 +6,7 @@ import com.example.application.data.repository.RezeptRepository;
 import com.example.application.data.repository.UserRepository;
 import com.example.application.data.repository.VideoRepository;
 import com.example.application.data.repository.ZutatRepository;
-import com.example.application.data.service.FoodProductRepository;
+import com.example.application.data.repository.FoodProductRepository;
 import com.vaadin.flow.spring.annotation.SpringComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

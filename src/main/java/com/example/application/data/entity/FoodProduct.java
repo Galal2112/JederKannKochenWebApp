@@ -1,8 +1,8 @@
 package com.example.application.data.entity;
 
-import javax.persistence.Entity;
-
 import com.example.application.data.AbstractEntity;
+
+import javax.persistence.Entity;
 import javax.persistence.Lob;
 
 @Entity
@@ -12,6 +12,13 @@ public class FoodProduct extends AbstractEntity {
     private String image;
     private String name;
     private String eanCode;
+
+    public FoodProduct() {}
+
+    public FoodProduct(String name, String eanCode) {
+        this.name = name;
+        this.eanCode = eanCode;
+    }
 
     public String getImage() {
         return image;
