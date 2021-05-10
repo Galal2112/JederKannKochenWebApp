@@ -2,9 +2,6 @@
 
 ### Project : Jeder Kann Kochen
 
-```
-Gruppe 18
-```
 **Security – OWASP Top 10**
 
 ### Feature 1 : Login
@@ -120,6 +117,6 @@ or should be allowed to get.
 - Burp Suite : Request and Response check
 - Dirbuster : Directorys check
 - Nmap : scan Open Ports
-
+@Galal Ahmed
 @Mahmoud Barakat
 
